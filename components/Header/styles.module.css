@@ -1,0 +1,23 @@
+.headerContainer {
+    background-color: var(--header-color);
+    padding: 9px 40px;
+}
+
+.headerLeft__item {
+    padding-left: 0;
+    margin-right: 15px;
+    height: 100%;
+    display: inline-flex;
+    cursor: pointer;
+    position: relative;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+.headerRight {
+    margin-left: 27rem;
+}
+
+.headerRight__item {
+    margin-right: 20px;
+}
