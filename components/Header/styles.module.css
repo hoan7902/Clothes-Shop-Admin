@@ -1,6 +1,12 @@
 .headerContainer {
     background-color: var(--header-color);
-    padding: 9px 40px;
+    padding: 0px 40px;
+    height: var(--height-topBar);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
 }
 
 .headerLeft__link__item {
@@ -102,5 +108,12 @@
     /* CSS rules for screens with a maximum width of 1024px (laptop screens) */
     .headerCenter {
         margin-left: -12rem;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    /* CSS rules for screens with a maximum width of 1024px (laptop screens) */
+    .headerContainer {
+        padding: 0px;
     }
 }

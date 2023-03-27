@@ -18,7 +18,6 @@ const Header: React.FC = () => {
   return (
     <Stack
       className={styles.headerContainer}
-      height="90px"
       display="flex"
       flexDirection="row"
       alignItems="center"
@@ -32,13 +31,13 @@ const Header: React.FC = () => {
         alignItems="center"
         justifyContent="space-between"
       > 
-        <Link className={styles.headerLeft__link__item} href="new-arrival">
+        <Link className={styles.headerLeft__link__item} href="/new-arrival">
           <Typography sx={{ fontSize: { sm: '0.7rem', md: '1rem'}}} className={styles.headerLeft__item}>New Arrival</Typography>
         </Link>
-        <Link className={styles.headerLeft__link__item} href="best-seller">
+        <Link className={styles.headerLeft__link__item} href="/best-seller">
           <Typography sx={{ fontSize: { sm: '0.7rem', md: '1rem'}}} className={styles.headerLeft__item}>Best Seller</Typography>
         </Link>
-        <Link className={styles.headerLeft__link__item} href="hot-deal">
+        <Link className={styles.headerLeft__link__item} href="/hot-deal">
           <Typography sx={{ fontSize: { sm: '0.7rem', md: '1rem'}}} className={styles.headerLeft__item}>Khuyến mại</Typography>
         </Link>
         <div className={`${styles.headerLeft__link__item} ${styles.headerLeft__link__item__production}`}>
@@ -58,10 +57,10 @@ const Header: React.FC = () => {
               
             </div>
         </div>
-        <Link className={styles.headerLeft__link__item} href="collection">
+        <Link className={styles.headerLeft__link__item} href="/collection">
           <Typography sx={{ fontSize: { sm: '0.7rem', md: '1rem'}}} className={styles.headerLeft__item}>Bộ sưu tập</Typography>
         </Link>
-        <Link className={styles.headerLeft__link__item} href="introduction">
+        <Link className={styles.headerLeft__link__item} href="/introduction">
           <Typography sx={{ fontSize: { sm: '0.7rem', md: '1rem'}}} className={styles.headerLeft__item}>Giới thiệu</Typography>
         </Link>
       </Stack>}
