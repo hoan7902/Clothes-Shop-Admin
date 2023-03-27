@@ -86,9 +86,9 @@ const Header: React.FC = () => {
           <IconButton className={styles.headerRight__item}>
             <SearchIcon/>
           </IconButton>
-          <IconButton className={styles.headerRight__item}>
+          {/* <IconButton className={styles.headerRight__item}> */}
             <Popup/> 
-          </IconButton>
+          {/* </IconButton> */}
           <IconButton className={styles.headerRight__item}>
             <ShoppingCartIcon/>
           </IconButton>

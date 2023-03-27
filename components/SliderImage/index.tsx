@@ -20,6 +20,7 @@ const SliderBanner: React.FC = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    // touchMove:true,
   };
 
   return (

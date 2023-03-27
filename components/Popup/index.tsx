@@ -15,9 +15,9 @@ const Popup = () => {
 
   return (
     <div>
-      <IconButton onClick={handleClickOpen}><PersonIcon/></IconButton>
+      <IconButton style={{ marginRight: "20px" }} onClick={handleClickOpen}><PersonIcon/></IconButton>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle textTransform="uppercase">Tài Khoản</DialogTitle>
+        <DialogTitle>Tài Khoản</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Popup content goes here.
