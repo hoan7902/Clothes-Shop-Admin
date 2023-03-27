@@ -1,5 +1,6 @@
 // components/layout.tsx
 
+import Footer from "../Footer";
 import Header from "../Header";
 
 interface LayoutProps {
@@ -12,6 +13,7 @@ export default function Layout({ children }: LayoutProps): JSX.Element {
       <main>
         <Header/>
         {children}
+        <Footer/>
       </main>
     </>
   );
