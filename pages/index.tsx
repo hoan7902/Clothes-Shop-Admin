@@ -1,20 +1,21 @@
-import PromotionSlide from "@/components/PromotionSlide";
+import PromotionSlide from "@/components/Home/PromotionSlide";
 import Head from "next/head";
 import Image from "next/image";
 import Layout from "../components/Layout";
-import SliderImage from '../components/SliderImage'
+import SliderImage from "../components/Home/SliderImage";
 import { Box } from "@mui/material";
+import CollectionSlide from "@/components/Home/CollectionSlide";
+import LocationBanner from "@/components/Home/LocationBanner";
 
 export default function Home() {
   return (
     <>
       <Layout>
         <SliderImage />
-        <PromotionSlide title="New Arrival"/>
-        <PromotionSlide title="Best Seller"/>
-        {/* <Box mt="100px" width="100vw">
-          <img src="https://lep.vn/images/preview-store.png"/>
-        </Box> */}
+        <PromotionSlide title="New Arrival" />
+        <CollectionSlide />
+        <PromotionSlide title="Best Seller" />
+        <LocationBanner/>
       </Layout>
     </>
   );

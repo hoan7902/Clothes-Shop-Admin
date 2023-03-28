@@ -4,20 +4,23 @@ import styles from "./styles.module.css";
 import Slider, { Settings } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import CardImage from "../CardImage";
+import CardImage from "../PromotionSlide/CardImage";
 
 interface SliderMutipleImagesProps {
-    numberSlideToShow: number,
-    numberSlideToScroll: number
-  }
+  numberSlideToShow: number;
+  numberSlideToScroll: number;
+}
 
-const SliderMutipleImages = ({ numberSlideToShow = 2, numberSlideToScroll = 2 }: SliderMutipleImagesProps) : JSX.Element => {
+const SliderMutipleImages = ({
+  numberSlideToShow = 2,
+  numberSlideToScroll = 2,
+}: SliderMutipleImagesProps): JSX.Element => {
   const isMobile = useMediaQuery("(max-width: 600px)");
 
   const settings: Settings = {
     arrows: true,
     infinite: true,
-    // autoplay: true,
+    autoplay: true,
     accessibility: true,
     dots: true,
     dotsClass: `${styles["slick-dots"]}`,
@@ -70,7 +73,6 @@ const SliderMutipleImages = ({ numberSlideToShow = 2, numberSlideToScroll = 2 }:
           name="Váy lụa 2 dây cổ đổ 1VA01740XT"
           price="650.000đ"
         />
-        
       </div>
       <div className={styles.item}>
         <CardImage
@@ -78,7 +80,6 @@ const SliderMutipleImages = ({ numberSlideToShow = 2, numberSlideToScroll = 2 }:
           name="Váy lụa 2 dây cổ đổ 1VA01740XT"
           price="650.000đ"
         />
-        
       </div>
       <div className={styles.item}>
         <CardImage
@@ -86,7 +87,6 @@ const SliderMutipleImages = ({ numberSlideToShow = 2, numberSlideToScroll = 2 }:
           name="Váy lụa 2 dây cổ đổ 1VA01740XT"
           price="650.000đ"
         />
-        
       </div>
       <div className={styles.item}>
         <CardImage
@@ -94,7 +94,6 @@ const SliderMutipleImages = ({ numberSlideToShow = 2, numberSlideToScroll = 2 }:
           name="Váy lụa 2 dây cổ đổ 1VA01740XT"
           price="650.000đ"
         />
-        
       </div>
       <div className={styles.item}>
         <CardImage
@@ -102,7 +101,6 @@ const SliderMutipleImages = ({ numberSlideToShow = 2, numberSlideToScroll = 2 }:
           name="Váy lụa 2 dây cổ đổ 1VA01740XT"
           price="650.000đ"
         />
-        
       </div>
       <div className={styles.item}>
         <CardImage
@@ -110,7 +108,6 @@ const SliderMutipleImages = ({ numberSlideToShow = 2, numberSlideToScroll = 2 }:
           name="Váy lụa 2 dây cổ đổ 1VA01740XT"
           price="650.000đ"
         />
-        
       </div>
     </Slider>
   );

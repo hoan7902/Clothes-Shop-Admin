@@ -5,11 +5,11 @@ import styles from "./styles.module.css";
 import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import SidebarDrawer from '../SidebarDrawer'
+import SidebarDrawer from '../Home/SidebarDrawer'
 import MenuIcon from '@mui/icons-material/Menu';
 import { useMediaQuery, IconButton } from "@mui/material";
 import Link from "next/link";
-import Popup from "../Popup";
+import Popup from "../Home/Popup";
 
 const Header: React.FC = () => {
   const [openMobile, setOpenMobile] = useState(false);

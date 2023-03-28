@@ -1,14 +1,12 @@
 import Head from "next/head";
 import Image from "next/image";
 import Layout from "../components/Layout";
-import SliderImage from '../components/SliderImage'
+import SliderImage from "../components/Home/SliderImage";
 
 export default function Home() {
   return (
     <>
-      <Layout>
-        New Arrival
-      </Layout>
+      <Layout>New Arrival</Layout>
     </>
   );
 }

@@ -5,10 +5,10 @@ import Link from "next/link";
 import SliderMutipleImages from "../SliderMutipleImages";
 
 interface Props {
-  title: string
+  title: string;
 }
 
-const PromotionSlide = ({ title = "No name" } : Props): JSX.Element => {
+const PromotionSlide = ({ title = "No name" }: Props): JSX.Element => {
   const isMobile = useMediaQuery("(max-width: 600px)");
   const isTablet = useMediaQuery("(max-width: 1200px)");
   return (
@@ -24,8 +24,11 @@ const PromotionSlide = ({ title = "No name" } : Props): JSX.Element => {
       <Link href="new-arrival">
         <button className={styles.button}>Shop Now</button>
       </Link>
-      <Box sx={{ marginTop: '20px', width: {md: "950px", xs: "375px"}}}>
-        <SliderMutipleImages numberSlideToShow={isTablet ? (isMobile ? 2 : 3) : 4} numberSlideToScroll={isTablet ? 1 : 2}/>
+      <Box sx={{ marginTop: "20px", width: { md: "950px", xs: "375px" } }}>
+        <SliderMutipleImages
+          numberSlideToShow={isTablet ? (isMobile ? 2 : 3) : 4}
+          numberSlideToScroll={isTablet ? 1 : 2}
+        />
       </Box>
     </Box>
   );
