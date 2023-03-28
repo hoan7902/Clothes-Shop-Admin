@@ -34,7 +34,7 @@ const SliderBanner: React.FC = () => {
     return (
       <div
         className={className}
-        style={{ ...style, display: "block", right: "22px", scale: "2.2" }}
+        style={{ ...style, display: "block", right: "22px", scale: "1.5" }}
         onClick={onClick}
       />
     );
@@ -45,7 +45,7 @@ const SliderBanner: React.FC = () => {
     return (
       <div
         className={className}
-        style={{ ...style, display: "block", left: "22px", zIndex: "3", scale: "2.2" }}
+        style={{ ...style, display: "block", left: "22px", zIndex: "3", scale: "1.5" }}
         onClick={onClick}
       />
     );
@@ -99,44 +99,44 @@ const SliderBanner: React.FC = () => {
       //ON MOBILE
       <Slider {...settings} className={styles.container}>
       <div className={styles.item}>
-        <h3 className={styles.wrapper__item}>
+        <div className={styles.wrapper__item}>
           <img
             className={styles.image}
             alt="Slider trang chu 1"
             title="Slider trang chu 1"
             src="https://cdn.lep.vn/2022/10/images/banners/1669012148827-COVER-MOBILE-(1).jpeg"
           />
-        </h3>
+        </div>
       </div>
       <div className={styles.item}>
-        <h3 className={styles.wrapper__item}>
+        <div className={styles.wrapper__item}>
           <img
             className={styles.image}
             alt="Slider trang chu 2"
             title="Slider trang chu 2"
             src="https://cdn.lep.vn/2022/10/images/banners/1669012132047-1667911964830-COVER-MOBILE-1.jpeg"
           />
-        </h3>
+        </div>
       </div>
       <div className={styles.item}>
-        <h3 className={styles.wrapper__item}>
+        <div className={styles.wrapper__item}>
           <img
             className={styles.image}
             alt="Slider trang chu 3"
             title="Slider trang chu 3"
             src="https://cdn.lep.vn/2022/10/images/banners/1669012123326-1667911927382-ppp.jpeg"
           />
-        </h3>
+        </div>
       </div>
       <div className={styles.item}>
-        <h3 className={styles.wrapper__item}>
+        <div className={styles.wrapper__item}>
           <img
             className={styles.image}
             alt="Slider trang chu 4"
             title="Slider trang chu 4"
             src="https://cdn.lep.vn/2022/10/images/banners/1669012111241-1667911936656-p1.jpeg"
           />
-        </h3>
+        </div>
       </div>
   </Slider>  
   );
