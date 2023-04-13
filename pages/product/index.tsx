@@ -4,9 +4,10 @@ import Layout from "../../components/Layout";
 import SliderImage from "../../components/Home/SliderImage";
 import { Box, Stack, Typography } from "@mui/material";
 import styles from "./styles.module.css";
-import OrderItem from "@/components/Category/CategoryLayout";
+import ProductItem from "@/components/Product/ProductLayout/ProductItem";
+import ProductLayout from "@/components/Product/ProductLayout";
 
-export default function Category() {
+export default function Product() {
   return (
     <>
       <Layout>
@@ -18,7 +19,7 @@ export default function Category() {
             >
               sản phẩm
             </Typography>
-            <OrderItem />
+            <ProductLayout/>
           </Box>
         </Box>
       </Layout>

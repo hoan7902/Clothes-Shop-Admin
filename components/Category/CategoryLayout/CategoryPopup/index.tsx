@@ -16,9 +16,16 @@ import axios from "axios";
 interface Props {
   isUpdate?: boolean;
   setIsUpdate?: Dispatch<SetStateAction<boolean>>;
+  reload: boolean;
+  setReload: Dispatch<SetStateAction<boolean>>;
 }
 
-const CategoryPopup: React.FC<Props> = ({ isUpdate, setIsUpdate }) => {
+const CategoryPopup: React.FC<Props> = ({
+  isUpdate,
+  setIsUpdate,
+  reload,
+  setReload,
+}) => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
@@ -27,45 +34,33 @@ const CategoryPopup: React.FC<Props> = ({ isUpdate, setIsUpdate }) => {
     setOpen(true);
   };
 
-  const handleAddCategory = async () => {
+  const handleClose = () => {
     setOpen(false);
-    if (name === "" && desc === "") {
+  };
+
+  const handleAddCategory = async () => {
+    setName(name => "");
+    setDesc(desc => "");
+    setOpen(false);
+    if (name === "") {
       return;
     }
     if (!isUpdate) {
-      // const respone = await addCategory(JSON.stringify({ name, desc }));
-      // console.log("check category: ", respone);
-      axios({
-        method: "post",
-        url: "http://localhost/PHP_DB_SHOP/api/category",
-        headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNjgzODg5NjIyLCJpYXQiOjE2ODEyOTc2MjJ9.hXCRoIRfdMk-lcw-bsHKkywueWVEixBFa-ySs4vSlIA",
-          "Content-Type": "application/json",
-        },
-        data: JSON.stringify({
-          name: "Áo thun 3",
-          description: "Đây là danh mục áo thun",
-        }),
-      })
-        .then((response) => {
-          // handle success
-          console.log(response.data);
-        })
-        .catch((error) => {
-          // handle error
-          console.log(error.response.data);
-        });
+      console.log("check desc: ", desc);
+      const respone = await addCategory({ name, description: desc });
+      setReload(!reload);
     }
   };
   return (
     <div>
       <button onClick={handleOpen} className={styles.button}>
-        {isUpdate ? "Cập Nhật" : "+ Thêm mới danh mục"}
+        {isUpdate ? "Cập nhật danh mục" : "+ Thêm mới danh mục"}
       </button>
 
-      <Dialog open={open}>
-        <DialogTitle className={styles.wrapForm}>Add New Category</DialogTitle>
+      <Dialog onClose={handleClose} open={open}>
+        <DialogTitle className={styles.wrapForm}>
+          {isUpdate ? "Cập nhật danh mục" : "Thêm mới danh mục"}
+        </DialogTitle>
         <DialogContent>
           <form className={styles.form}>
             <Stack alignItems="center">
@@ -78,6 +73,7 @@ const CategoryPopup: React.FC<Props> = ({ isUpdate, setIsUpdate }) => {
                 <input
                   className={styles.input}
                   onChange={(e) => setName(e.target.value)}
+                  value={name}
                   placeholder="Name"
                   name="name"
                   type="text"
@@ -94,6 +90,7 @@ const CategoryPopup: React.FC<Props> = ({ isUpdate, setIsUpdate }) => {
                 <input
                   className={styles.input}
                   onChange={(e) => setDesc(e.target.value)}
+                  value={desc}
                   placeholder="Description"
                   name="description"
                   type="text"

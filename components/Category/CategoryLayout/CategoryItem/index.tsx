@@ -1,16 +1,28 @@
 import React, { useState } from "react";
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from "react";
 import { Grid, Stack, Typography } from "@mui/material";
 import styles from "./styles.module.css";
 import CategoryPopup from "../CategoryPopup";
 
-const CategoryItem: React.FC = ()=> {
+interface Category {
+  categoryId: string;
+  name: string;
+  description: string;
+}
+
+interface Props {
+  category: Category;
+  reload: boolean;
+  setReload: Dispatch<SetStateAction<boolean>>
+}
+
+const CategoryItem: React.FC<Props> = ({ category, reload, setReload }) => {
   const [isUpdate, setIsUpdate] = useState(true);
 
   return (
     <>
       <Grid container padding="25px" borderBottom="0.5px solid #444" p="20px">
-        <Grid xs={6} md={4}>
+        <Grid item xs={6} md={4}>
           <Stack flexDirection="row">
             <div className={styles.wrapImage}>
               <img
@@ -26,13 +38,14 @@ const CategoryItem: React.FC = ()=> {
                 lineHeight="1.75rem"
                 color="#444"
               >
-                Váy
+                {category.name}
               </Typography>
             </Stack>
           </Stack>
         </Grid>
 
         <Grid
+          item
           sx={{
             marginLeft: { xs: "37%", md: "0px" },
             display: { xs: "none", md: "block" },
@@ -41,12 +54,12 @@ const CategoryItem: React.FC = ()=> {
           md={4}
         >
           <Typography fontSize="1.1rem" fontWeight="400">
-            Dành cho chị em phụ nữ
+            {category.description}
           </Typography>
         </Grid>
-        <Grid xs={6} md={4}>
+        <Grid item xs={6} md={4}>
           <Stack flexDirection="row" alignItems="center">
-            <CategoryPopup isUpdate={isUpdate} setIsUpdate={setIsUpdate}/>
+            <CategoryPopup isUpdate={isUpdate} setIsUpdate={setIsUpdate} reload={reload} setReload={setReload} />
             <button className={styles.button}>Xóa</button>
           </Stack>
         </Grid>

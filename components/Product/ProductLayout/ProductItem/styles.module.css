@@ -15,6 +15,7 @@
     margin-right: 50px;
     font-size: 1.1rem;
     padding: 5px 10px;
+    min-width: 120px;
 }
 
 .button:hover {

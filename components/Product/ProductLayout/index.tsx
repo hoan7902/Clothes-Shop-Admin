@@ -1,9 +1,10 @@
 import { Grid, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
-import CategoryItem from "./ProductItem";
+import ProductItem from "./ProductItem";
+import ProductPopup from "./ProductPopup";
 import styles from "./styles.module.css";
 
-const OrderItem: React.FC = () => {
+const ProductLayout: React.FC = () => {
   const [quantity, setQuantity] = useState(1);
 
   const handleDecreaseQuantity = () => {
@@ -16,7 +17,7 @@ const OrderItem: React.FC = () => {
 
   return (
     <>
-      <button className={styles.button}>+ Thêm mới danh mục</button>
+      <ProductPopup/>
       <Grid
         container
         borderBottom="0.5px solid #444"
@@ -24,31 +25,33 @@ const OrderItem: React.FC = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <Grid className={styles.textHeader} xs={4}>
+        <Grid item className={styles.textHeader} xs={6} md={4}>
           Sản phẩm
         </Grid>
         <Grid
           sx={{ display: { xs: "none", md: "block" } }}
           className={styles.textHeader}
           xs={4}
+          item
         >
           Thông tin
         </Grid>
         <Grid
           className={styles.textHeader}
           xs={6} md={4}
+          item
         >
           Thao tác
         </Grid>
       </Grid>
 
-      <CategoryItem/>
-      <CategoryItem/>
-      <CategoryItem/>
-      <CategoryItem/>
-      <CategoryItem/>
+      <ProductItem/>
+      <ProductItem/>
+      <ProductItem/>
+      <ProductItem/>
+      <ProductItem/>
     </>
   );
 };
 
-export default OrderItem;
+export default ProductLayout;

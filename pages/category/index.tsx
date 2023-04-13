@@ -5,8 +5,23 @@ import SliderImage from "../../components/Home/SliderImage";
 import { Box, Stack, Typography } from "@mui/material";
 import styles from "./styles.module.css";
 import CategoryLayout from "@/components/Category/CategoryLayout";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { getCategories } from "../api";
+import { useEffect, useState } from "react";
 
-export default function Category() {
+const Category: React.FC = () => {
+
+  const [categories, setCategories] = useState([]);
+  const [reload, setReload] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await getCategories();
+      setCategories(res.data.categories);
+    }
+
+    fetchData();
+  }, [reload]);
   return (
     <>
       <Layout>
@@ -18,10 +33,12 @@ export default function Category() {
             >
               DANH MỤC
             </Typography>
-            <CategoryLayout />
+            <CategoryLayout categories={categories} reload={reload} setReload={setReload} />
           </Box>
         </Box>
       </Layout>
     </>
   );
-}
+};
+
+export default Category;

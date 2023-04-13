@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid, Stack, Typography } from "@mui/material";
 import styles from "./styles.module.css";
+import ProductPopup from "../ProductPopup";
 
-const CategoryItem: React.FC = () => {
+const ProductItem: React.FC = () => {
+  const [isUpdate, setIsUpdate] = useState(true);
   return (
     <>
       <Grid container padding="25px" borderBottom="0.5px solid #444" p="20px">
-        <Grid xs={6} md={4}>
+        <Grid item xs={6} md={4}>
           <Stack flexDirection="row">
             <div className={styles.wrapImage}>
               <img
@@ -29,20 +31,22 @@ const CategoryItem: React.FC = () => {
         </Grid>
 
         <Grid
+          item
           sx={{
             marginLeft: { xs: "37%", md: "0px" },
+            marginRight: "10px",
             display: { xs: "none", md: "block" },
           }}
           xs={12}
           md={4}
         >
           <Typography fontSize="1.1rem" fontWeight="400">
-            Dành cho chị em phụ nữ
+            Dành cho chị em phụ nữ tám
           </Typography>
         </Grid>
-        <Grid xs={6} md={4}>
+        <Grid item xs={6} md={4}>
           <Stack flexDirection="row" alignItems="center">
-            <button className={styles.button}>Cập Nhật</button>
+            <ProductPopup isUpdate={isUpdate} setIsUpdate={setIsUpdate}/>
             <button className={styles.button}>Xóa</button>
           </Stack>
         </Grid>
@@ -51,4 +55,4 @@ const CategoryItem: React.FC = () => {
   );
 };
 
-export default CategoryItem;
+export default ProductItem;

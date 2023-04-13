@@ -3,7 +3,7 @@ import axios from "axios";
 const API = axios.create({ baseURL: "http://localhost/PHP_DB_SHOP" });
 
 API.interceptors.request.use((req) => {
-  if (localStorage.getItem("user")) {
+  if (typeof localStorage !== "undefined" && localStorage.getItem("user")) {
     req.headers.Authorization = `Bearer ${
       JSON.parse(localStorage.getItem('user') || '{}').token
     }`;
@@ -18,9 +18,12 @@ export const loginUser = async (dataForm: any) => {
 }
 
 export const addCategory = async(category: any) => {
-  console.log("check category: ", category);
+  console.log("check request: ", category)
   const response = await API.post("/api/category", category);
-  console.log(response);
-  // const jsonData = JSON.stringify(response.data);
-  // return jsonData;
+  return response;
+}
+
+export const getCategories = async() => {
+  const response = await API.get("/api/categories");
+  return response;
 }

@@ -1,11 +1,26 @@
+import { getCategories } from "@/pages/api";
 import { Grid, Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import CategoryItem from "./CategoryItem";
 import CategoryPopup from "./CategoryPopup";
 import styles from "./styles.module.css";
 
-const OrderItem: React.FC = () => {
+interface Category {
+  categoryId: string;
+  name: string;
+  description: string;
+}
+
+interface Props {
+  categories?: Category[];
+  reload: boolean;
+  setReload: Dispatch<SetStateAction<boolean>>
+}
+
+const CategoryLayout: React.FC<Props> = ({ categories, reload, setReload }) => {
+
   const [quantity, setQuantity] = useState(1);
+
   const handleDecreaseQuantity = () => {
     setQuantity(quantity - 1);
   };
@@ -16,7 +31,7 @@ const OrderItem: React.FC = () => {
 
   return (
     <>
-      <CategoryPopup/>
+      <CategoryPopup reload={reload} setReload={setReload} />
       <Grid
         container
         borderBottom="0.5px solid #444"
@@ -24,31 +39,26 @@ const OrderItem: React.FC = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <Grid className={styles.textHeader} xs={4}>
+        <Grid item className={styles.textHeader} xs={6} md={4}>
           Danh mục
         </Grid>
         <Grid
+          item
           sx={{ display: { xs: "none", md: "block" } }}
           className={styles.textHeader}
           xs={4}
         >
           Mô tả
         </Grid>
-        <Grid
-          className={styles.textHeader}
-          xs={6} md={4}
-        >
+        <Grid item className={styles.textHeader} xs={6} md={4}>
           Thao tác
         </Grid>
       </Grid>
-
-      <CategoryItem/>
-      <CategoryItem/>
-      <CategoryItem/>
-      <CategoryItem/>
-      <CategoryItem/>
+      {
+        categories?.map((category, index) => <CategoryItem key={index} category={category} reload={reload} setReload={setReload} />)
+      }
     </>
   );
 };
 
-export default OrderItem;
+export default CategoryLayout;
