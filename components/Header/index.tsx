@@ -79,14 +79,6 @@ const Header: React.FC = () => {
               Sản phẩm
             </Typography>
           </Link>
-          <Link className={styles.headerLeft__link__item} href="/collection">
-            <Typography
-              sx={{ fontSize: { sm: "0.7rem", md: "1rem" } }}
-              className={styles.headerLeft__item}
-            >
-              Bộ sưu tập
-            </Typography>
-          </Link>
         </Stack>
       )}
 

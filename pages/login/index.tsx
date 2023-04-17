@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Box, Stack, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  AlertColor,
+  Box,
+  Snackbar,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import styles from "./styles.module.css";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -14,20 +22,38 @@ const Login = (): JSX.Element => {
   const handleChangeVisibility = () => {
     setIsVisibility(!isVisibility);
   };
+  const [openNoti, setOpenNoti] = useState(false);
+  const [statusAlert, setStatusAlert] = useState<AlertColor>("error");
+  const [messageAlert, setMessageAlert] = useState("Thiếu thông tin");
+
+  const hanldOpenNoti = () => {
+    setOpenNoti(true);
+  };
+
+  const handleCloseNoti = (
+    event: React.SyntheticEvent | Event | undefined = undefined,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenNoti(false);
+  };
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const response = await loginUser(JSON.stringify({ email, password }));
-      console.log("check response: ", response);
-      if (response !== undefined) {
-        localStorage.setItem("user", JSON.stringify(response));
-        router.push("/order");
-      } else {
-        console.log("not working");
-      }
-    } catch (error) {
-      console.error(error);
+    const response = await loginUser(JSON.stringify({ email, password }));
+    console.log("check res: ", response);
+    if (response.status === true) {
+      setOpenNoti(true);
+      setStatusAlert("success");
+      setMessageAlert("Đăng nhập thành công");
+      router.push("/order");
+      localStorage.setItem("user", JSON.stringify(response));
+    } else {
+      setStatusAlert("error");
+      setMessageAlert("Thiếu hoặc sai thông tin");
+      setOpenNoti(true);
     }
   };
 
@@ -98,6 +124,19 @@ const Login = (): JSX.Element => {
           </Stack>
         </form>
       </Box>
+      <Snackbar
+        open={openNoti}
+        autoHideDuration={null}
+        onClose={handleCloseNoti}
+      >
+        <Alert
+          onClose={handleCloseNoti}
+          severity={statusAlert}
+          sx={{ width: "100%" }}
+        >
+          {messageAlert}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

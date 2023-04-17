@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 const API = axios.create({ baseURL: "http://localhost/PHP_DB_SHOP" });
 
@@ -13,8 +13,12 @@ API.interceptors.request.use((req) => {
 });
 
 export const loginUser = async (dataForm: any) => {
-  const response = await API.post("/api/user/login", dataForm);
-  return response.data; 
+  try {
+    const response = await API.post("/api/user/login", dataForm);
+    return response.data;
+  } catch (error) {
+    return (error as AxiosError).response
+  } 
 }
 
 export const addCategory = async(category: any) => {
