@@ -15,19 +15,61 @@ const Footer: React.FC = () => {
       }}
       justifyContent="space-around"
     >
-        <Stack flexDirection="column">
-            <Typography sx={{ textAlign: {xs: "center", sm: "start"}}} className={styles.title} m="20px 0" textTransform="uppercase">Liên hệ</Typography>
-            <Typography sx={{ textAlign: {xs: "center", sm: "start"}}} className={styles.text}>Mua hàng online: 0786170902</Typography>
-            <Typography sx={{ textAlign: {xs: "center", sm: "start"}}} className={styles.text}>Liên hệ hợp tác: myshop@gmail.com</Typography>
-            <Typography sx={{ textAlign: {xs: "center", sm: "start"}}} className={styles.text}>Chăm sóc khách hàng: 0786170902</Typography>
-            <Typography sx={{ textAlign: {xs: "center", sm: "start"}}} className={styles.text}>Thời gian làm việc: Thứ 2 đến thứ 7 từ 8h30 đến hết 17h30</Typography>
-            <Typography sx={{ textAlign: {xs: "center", sm: "start"}}} className={styles.text}>Địa chỉ: Đại Học Bách Khoa Thành Phố Hồ Chí Minh</Typography>
-            {/* <div>
+      <Stack flexDirection="column">
+        <Typography
+          sx={{ textAlign: { xs: "center", sm: "start" } }}
+          className={styles.title}
+          m="20px 0"
+          textTransform="uppercase"
+        >
+          Liên hệ
+        </Typography>
+        <Typography
+          sx={{ textAlign: { xs: "center", sm: "start" } }}
+          className={styles.text}
+        >
+          Mua hàng online: 0786170902
+        </Typography>
+        <Typography
+          sx={{ textAlign: { xs: "center", sm: "start" } }}
+          className={styles.text}
+        >
+          Liên hệ hợp tác: myshop@gmail.com
+        </Typography>
+        <Typography
+          sx={{ textAlign: { xs: "center", sm: "start" } }}
+          className={styles.text}
+        >
+          Chăm sóc khách hàng: 0786170902
+        </Typography>
+        <Typography
+          sx={{ textAlign: { xs: "center", sm: "start" } }}
+          className={styles.text}
+        >
+          Thời gian làm việc: Thứ 2 đến thứ 7 từ 8h30 đến hết 17h30
+        </Typography>
+        <Typography
+          sx={{ textAlign: { xs: "center", sm: "start" } }}
+          className={styles.text}
+        >
+          Địa chỉ: Đại Học Bách Khoa Thành Phố Hồ Chí Minh
+        </Typography>
+        {/* <div>
                 <img width="160px" height="60px" src="https://lep.vn/images/bo-cong-thuong.png"/>
             </div> */}
-            <Typography sx={{ textAlign: {xs: "center", sm: "start"}}} className={styles.text}>© Bản quyền thuộc Công ty cổ phần thời trang Bách Khoa</Typography>
-            <Typography sx={{ textAlign: {xs: "center", sm: "start"}}} className={styles.text}>Mã số thuế: ...</Typography>
-        </Stack>
+        <Typography
+          sx={{ textAlign: { xs: "center", sm: "start" } }}
+          className={styles.text}
+        >
+          © Bản quyền thuộc Công ty cổ phần thời trang Bách Khoa
+        </Typography>
+        <Typography
+          sx={{ textAlign: { xs: "center", sm: "start" } }}
+          className={styles.text}
+        >
+          Mã số thuế: ...
+        </Typography>
+      </Stack>
 
       <Stack flexDirection="column">
         <Typography

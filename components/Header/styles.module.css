@@ -1,14 +1,14 @@
 .headerContainer {
-    background-color: var(--header-color);
-    /* background-color: #999; */
-    padding: 0px 40px;
-    height: var(--height-topBar);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 5;
-    box-shadow: 2px 0px 8px 2px #99999999;
+  background-color: var(--header-color);
+  /* background-color: #999; */
+  padding: 0px 40px;
+  height: var(--height-topBar);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  box-shadow: 2px 0px 8px 2px #99999999;
 }
 
 .headerLeft__link__item {
