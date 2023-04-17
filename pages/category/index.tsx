@@ -15,8 +15,8 @@ const Category: React.FC = () => {
   useEffect(() => {
     async function fetchData() {
       const res = await getCategories(limit, page);
-      setCategories(res.data.categories);
-      setTotal(res.data.count);
+      setCategories(res?.data.categories);
+      setTotal(res?.data.count);
     }
 
     fetchData();

@@ -20,8 +20,8 @@ export default function Order() {
   useEffect(() => {
     async function fetchData() {
       const res = await getOrders(limit, page);
-      setOrderData(res.data.data);
-      setTotal(res.data.count);
+      setOrderData(res?.data.data);
+      setTotal(res?.data.count);
     }
 
     fetchData();

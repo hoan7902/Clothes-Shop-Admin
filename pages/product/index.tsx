@@ -19,8 +19,8 @@ export default function Product() {
   useEffect(() => {
     async function fetchData() {
       const res = await getProducts(limit, page);
-      setProducts(res.data.data);
-      setTotal(res.data.count);
+      setProducts(res?.data.data);
+      setTotal(res?.data.count);
     }
 
     fetchData();
