@@ -24,17 +24,15 @@ interface Category {
 }
 
 interface Props {
-  category: Category;
+  category?: Category;
   isUpdate?: boolean;
-  setIsUpdate?: Dispatch<SetStateAction<boolean>>;
   reload: boolean;
   setReload: Dispatch<SetStateAction<boolean>>;
 }
 
 const CategoryPopup: React.FC<Props> = ({
   category,
-  isUpdate,
-  setIsUpdate,
+  isUpdate = false,
   reload,
   setReload,
 }) => {
@@ -81,7 +79,7 @@ const CategoryPopup: React.FC<Props> = ({
       setMessageAlert("Thành công");
       setReload(!reload);
     } else {
-      const response = await updateCategory(category.categoryId, name, desc);
+      const response = await updateCategory(category?.categoryId, name, desc);
       setOpenNoti(true);
       setStatusAlert("success");
       setMessageAlert("Thành công");

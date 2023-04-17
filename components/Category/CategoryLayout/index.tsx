@@ -4,6 +4,7 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import CategoryItem from "./CategoryItem";
 import styles from "./styles.module.css";
 import Pagination from "@mui/material/Pagination";
+import CategoryPopup from "./CategoryPopup";
 
 interface Category {
   categoryId: string;
@@ -40,6 +41,7 @@ const CategoryLayout: React.FC<Props> = ({
 
   return (
     <>
+      <CategoryPopup reload={reload} setReload={setReload}/>
       <Grid
         container
         borderBottom="0.5px solid #444"
