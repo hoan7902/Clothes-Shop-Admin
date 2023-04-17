@@ -58,7 +58,6 @@ const CategoryItem: React.FC<Props> = ({ category, reload, setReload }) => {
           <Stack flexDirection="row" alignItems="center">
             <CategoryPopup
               isUpdate={isUpdate}
-              setIsUpdate={setIsUpdate}
               reload={reload}
               setReload={setReload}
               category={category}

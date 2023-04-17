@@ -41,7 +41,7 @@ const CategoryLayout: React.FC<Props> = ({
 
   return (
     <>
-      <CategoryPopup reload={reload} setReload={setReload}/>
+      <CategoryPopup reload={reload} setReload={setReload} />
       <Grid
         container
         borderBottom="0.5px solid #444"
