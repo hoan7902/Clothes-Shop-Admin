@@ -1,10 +1,35 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { Grid, Stack, Typography } from "@mui/material";
 import styles from "./styles.module.css";
 import ProductPopup from "../ProductPopup";
+import { deleteSpecificProduct } from "@/pages/api";
 
-const ProductItem: React.FC = () => {
+interface Product {
+  productId: string;
+  createdAt: string;
+  name: string;
+  description: string;
+  minPrice: string;
+  maxPrice: string;
+  soldQuantity: string;
+  images: string[];
+}
+
+interface Props {
+  product?: Product;
+  reload: boolean;
+  setReload: Dispatch<SetStateAction<boolean>>;
+}
+
+const ProductItem: React.FC<Props> = ({ product, reload, setReload }) => {
   const [isUpdate, setIsUpdate] = useState(true);
+
+  const handleDelete = async () => {
+    const response = await deleteSpecificProduct(product?.productId);
+    console.log("check delete: ", response);
+    setReload(!reload);
+  };
+
   return (
     <>
       <Grid container padding="25px" borderBottom="0.5px solid #444" p="20px">
@@ -14,17 +39,17 @@ const ProductItem: React.FC = () => {
               <img
                 width="100%"
                 height="100%"
-                src="https://cdn.lep.vn/2022/09/images/products/1663057005975-1VA01940HO-compressed.jpeg"
+                src={product && product.images[0]}
               />
             </div>
-            <Stack sx={{ marginLeft: { xs: 0, sm: "30px"}}}>
+            <Stack sx={{ marginLeft: { xs: 0, sm: "30px" } }}>
               <Typography
                 fontSize="1.25rem"
                 fontWeight="100"
                 lineHeight="1.75rem"
                 color="#444"
               >
-                Váy
+                {product && product.name}
               </Typography>
             </Stack>
           </Stack>
@@ -34,20 +59,36 @@ const ProductItem: React.FC = () => {
           item
           sx={{
             marginLeft: { xs: "37%", md: "0px" },
-            marginRight: "10px",
             display: { xs: "none", md: "block" },
           }}
           xs={12}
           md={4}
         >
-          <Typography fontSize="1.1rem" fontWeight="400">
-            Dành cho chị em phụ nữ tám
+          <Typography fontSize="1.1rem" fontWeight="400" textAlign="center">
+            {product && product.description}
+          </Typography>
+          {/* <Typography fontSize="1.1rem" fontWeight="400" textAlign="center">
+            Category: {product && product.categories}
+          </Typography> */}
+          <Typography fontSize="1.1rem" fontWeight="400" textAlign="center">
+            MinPrice: {product && product.minPrice}
+          </Typography>
+          <Typography fontSize="1.1rem" fontWeight="400" textAlign="center">
+            MaxPrice: {product && product.maxPrice}
           </Typography>
         </Grid>
         <Grid item xs={6} md={4}>
           <Stack flexDirection="row" alignItems="center">
-            <ProductPopup isUpdate={isUpdate} setIsUpdate={setIsUpdate}/>
-            <button className={styles.button}>Xóa</button>
+            <ProductPopup
+              product={product}
+              reload={reload}
+              setReload={setReload}
+              isUpdate={isUpdate}
+              setIsUpdate={setIsUpdate}
+            />
+            <button onClick={handleDelete} className={styles.button}>
+              Xóa
+            </button>
           </Stack>
         </Grid>
       </Grid>

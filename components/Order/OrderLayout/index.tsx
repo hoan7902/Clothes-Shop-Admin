@@ -1,14 +1,19 @@
-import { getCategories } from "@/pages/api";
-import { Grid, Stack, Typography } from "@mui/material";
-import React, { Dispatch, SetStateAction, useState } from "react";
-import CategoryItem from "./CategoryItem";
+import { Grid, Stack } from "@mui/material";
+import React, { Dispatch, SetStateAction } from "react";
+import OrderItem from "./OrderItem";
 import styles from "./styles.module.css";
 import Pagination from "@mui/material/Pagination";
 
-interface Category {
-  categoryId: string;
-  name: string;
-  description: string;
+interface OrderData {
+  address: string;
+  cost: number | string; // Depending on how the data is used, the cost can be represented as either a number or a string
+  deliveryTime: Date | null;
+  note: string;
+  orderId: string;
+  orderTime: string;
+  phone: string;
+  status: string;
+  userId: string;
 }
 
 interface Props {
@@ -16,17 +21,17 @@ interface Props {
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   total: number;
-  categories?: Category[];
+  orderData?: OrderData[];
   reload: boolean;
   setReload: Dispatch<SetStateAction<boolean>>;
 }
 
-const CategoryLayout: React.FC<Props> = ({
+const OrderLayout: React.FC<Props> = ({
   limit,
   page,
   setPage,
   total,
-  categories,
+  orderData,
   reload,
   setReload,
 }) => {
@@ -39,7 +44,7 @@ const CategoryLayout: React.FC<Props> = ({
   };
 
   return (
-    <>
+    <div>
       <Grid
         container
         borderBottom="0.5px solid #444"
@@ -47,25 +52,26 @@ const CategoryLayout: React.FC<Props> = ({
         justifyContent="center"
         alignItems="center"
       >
-        <Grid item className={styles.textHeader} xs={6} sm={4}>
-          Danh mục
+        <Grid item className={styles.textHeader} xs={6} md={4}>
+          Mã đơn hàng
         </Grid>
         <Grid
-          item
-          sx={{ display: { xs: "none", sm: "block" } }}
+          sx={{ display: { xs: "none", md: "block" } }}
           className={styles.textHeader}
           xs={4}
+          item
         >
-          Mô tả
+          Trạng thái
         </Grid>
-        <Grid item className={styles.textHeader} xs={6} sm={4}>
+        <Grid className={styles.textHeader} xs={6} md={4} item>
           Thao tác
         </Grid>
       </Grid>
-      {categories?.map((category, index) => (
-        <CategoryItem
+
+      {orderData?.map((order, index) => (
+        <OrderItem
           key={index}
-          category={category}
+          order={order}
           reload={reload}
           setReload={setReload}
         />
@@ -76,8 +82,8 @@ const CategoryLayout: React.FC<Props> = ({
           onChange={handlePageChange}
         />
       </Stack>
-    </>
+    </div>
   );
 };
 
-export default CategoryLayout;
+export default OrderLayout;

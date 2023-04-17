@@ -16,7 +16,7 @@ const RightCollection = ({ title }: Props): JSX.Element => {
       sx={{
         backgroundColor: "#000",
         padding: { xs: "30px 0" },
-        marginTop: { xs: "-4px", md: 0 },
+        marginTop: { xs: "-4px", sm: 0 },
       }}
     >
       <Typography className={styles.right__title}>{title}</Typography>

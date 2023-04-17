@@ -1,8 +1,6 @@
-.wrapImage{
-    min-width: 80px;
-    position: relative;
-    width: 17%;
-    font-size: 100%;
+.textHeader {
+    color: #444;
+    font-size: 1.2rem;
 }
 
 .button {
@@ -15,17 +13,10 @@
     margin-right: 50px;
     font-size: 1.1rem;
     padding: 5px 10px;
-    text-align: center;
 }
 
 .button:hover {
     background-color: var(--primary-red);
     color: #fff;
     cursor: pointer;
-}
-
-@media only screen and (max-width: 600px) {
-    .wrapImage{
-        display: none;
-    }
 }

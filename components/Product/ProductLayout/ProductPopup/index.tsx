@@ -1,4 +1,10 @@
-import React, { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import React, {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import {
   Button,
   Dialog,
@@ -7,69 +13,213 @@ import {
   DialogActions,
   Stack,
   Typography,
+  Alert,
+  Box,
+  AlertColor,
 } from "@mui/material";
 import styles from "./styles.module.css";
 import axios from "axios";
-import fs from "fs";
+import {
+  addProduct,
+  getCategories,
+  getSpecificProduct,
+  updateSpecificProduct,
+} from "@/pages/api";
+import Snackbar from "@mui/material/Snackbar";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+
+interface Product {
+  productId: string;
+  createdAt: string;
+  name: string;
+  description: string;
+  minPrice: string;
+  maxPrice: string;
+  soldQuantity: string;
+  images: string[];
+}
 
 interface Props {
   isUpdate?: boolean;
   setIsUpdate?: Dispatch<SetStateAction<boolean>>;
+  product?: Product;
+  reload: boolean;
+  setReload: Dispatch<SetStateAction<boolean>>;
 }
 
-const ProductPopup: React.FC<Props> = ({ isUpdate, setIsUpdate }) => {
+interface Category {
+  categoryId: string;
+  name: string;
+  description: string;
+}
+
+interface Size {
+  sizeName: string;
+  quantity: number;
+  price: number;
+}
+
+const ProductPopup: React.FC<Props> = ({
+  product,
+  isUpdate,
+  setIsUpdate,
+  reload,
+  setReload,
+}) => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [sizes, setSizes] = useState("");
-  const [images, setImages] = useState<File>();
-  const [categories, setCategories] = useState("");
+  const [images, setImages] = useState<FileList>();
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [sizes, setSizes] = useState<Size[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [newSizeName, setNewSizeName] = useState("");
+  const [newSizeQuantity, setNewSizeQuantity] = useState(0);
+  const [newSizePrice, setNewSizePrice] = useState(0);
+  const [openNoti, setOpenNoti] = useState(false);
+  const [statusAlert, setStatusAlert] = useState<AlertColor>("error");
+  const [messageAlert, setMessageAlert] = useState("Thiếu thông tin");
+
+  const resetState = () => {
+    setOpen(false);
+    setName("");
+    setDescription("");
+    setImages(undefined);
+    // setCategories([]);
+    setSizes([]);
+    setSelectedCategories([]);
+    setNewSizeName("");
+    setNewSizeQuantity(0);
+    setNewSizePrice(0);
+    setStatusAlert("error");
+    setMessageAlert("Thiếu thông tin!");
+  };
+
+  const hanldOpenNoti = () => {
+    setOpenNoti(true);
+  };
+
+  const handleCloseNoti = (
+    event: React.SyntheticEvent | Event | undefined = undefined,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenNoti(false);
+  };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    console.log("check file: ", file);
+    const file = event.target.files;
     if (file) {
       setImages(file);
     }
   };
 
-  const handleAddProduct = () => {
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("description", description);
-    let sizes = [
-      {
-        sizeName: "S",
-        quantity: 12,
-        price: 333333,
-      },
-      {
-        sizeName: "M",
-        quantity: 13,
-        price: 444444,
-      },
-      {
-        sizeName: "L",
-        quantity: 6,
-        price: 555555,
-      },
-    ];
-    formData.append("sizes", JSON.stringify(sizes));
-    formData.append("categories", JSON.stringify([1, 2, 3]));
-    if (images) formData.append("images[]", images);
+  const handleChangeCategories = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selected = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
+    setSelectedCategories(selected);
+  };
 
-    console.log("check file: ", images)
+  const handleAddSize = () => {
+    const newSize = {
+      sizeName: newSizeName,
+      quantity: newSizeQuantity,
+      price: newSizePrice,
+    };
+    if (newSizeName === "" || newSizeQuantity === 0 || newSizePrice === 0) {
+      setOpenNoti(true);
+      return;
+    }
+    setSizes([...sizes, newSize]);
+    setOpenNoti(true);
+    setStatusAlert("success");
+    setMessageAlert("Thành công!");
+    setNewSizeName("");
+    setNewSizeQuantity(0);
+    setNewSizePrice(0);
+  };
 
-    axios
-    .post("http://localhost/PHP_DB_SHOP/api/product/add", formData, {
-        headers: {
-            Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNjgzODg5NjIyLCJpYXQiOjE2ODEyOTc2MjJ9.hXCRoIRfdMk-lcw-bsHKkywueWVEixBFa-ySs4vSlIA",
-            "Content-Type": "multipart/form-data",
-        },
-    })
-    .then((data) => {
-        console.log(data.data);
+  const handleProcessProduct = async () => {
+    if (!isUpdate) {
+      const formData = new FormData();
+      if (
+        name === "" ||
+        description === "" ||
+        sizes.length === 0 ||
+        selectedCategories.length === 0 ||
+        !images
+      ) {
+        setOpenNoti(true);
+        setStatusAlert("error");
+        setMessageAlert("Thiếu thông tin");
+        return;
+      }
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("sizes", JSON.stringify(sizes));
+      formData.append("categories", JSON.stringify(selectedCategories));
+      if (images) {
+        for (let i = 0; i < images.length; i++) {
+          formData.append("images[]", images[i]);
+        }
+      }
+      setStatusAlert("success");
+      setMessageAlert("Thành công!");
+      setOpenNoti(true);
+      setOpen(false);
+      setName("");
+      setDescription("");
+      setImages(undefined);
+      setSizes([]);
+      setSelectedCategories([]);
+      setNewSizeName("");
+      setNewSizeQuantity(0);
+      setNewSizePrice(0);
+      const res = await addProduct(formData);
+      setReload(!reload);
+    } else {
+      console.log("check sizes: ", sizes);
+      const formData = new FormData();
+      if (product) {
+        formData.append("productId", product.productId);
+        formData.append("name", name);
+        formData.append("description", description);
+        formData.append("sizes", JSON.stringify(sizes));
+        formData.append("categories", JSON.stringify(selectedCategories));
+        if (images) {
+          for (let i = 0; i < images.length; i++) {
+            formData.append("images[]", images[i]);
+          }
+        }
+        setStatusAlert("success");
+        setMessageAlert("Thành công!");
+        setOpenNoti(true);
+        setOpen(false);
+        setName("");
+        setDescription("");
+        setImages(undefined);
+        setSizes([]);
+        setSelectedCategories([]);
+        setNewSizeName("");
+        setNewSizeQuantity(0);
+        setNewSizePrice(0);
+        const response = await updateSpecificProduct(formData);
+        console.log("check res: ", response.data);
+        setReload(!reload);
+      }
+    }
+  };
+
+  const handleSizeUpdate = (updatedSize: Size, index: number) => {
+    setSizes((prevSizes) => {
+      const newSizes = [...prevSizes];
+      newSizes[index] = updatedSize;
+      return newSizes;
     });
   };
 
@@ -79,7 +229,56 @@ const ProductPopup: React.FC<Props> = ({ isUpdate, setIsUpdate }) => {
 
   const handleClose = () => {
     setOpen(false);
+    setOpenNoti(false);
+    resetState();
   };
+
+  const fetchCategories = async () => {
+    const response = await getCategories(100);
+    setCategories(response.data.categories);
+  };
+
+  const fetchSpecificProduct = async () => {
+    if (product) {
+      const response = await getSpecificProduct(product.productId);
+      const { name, description, categories, sizes } = response.data;
+      setName(name);
+      setDescription(description);
+      setSelectedCategories(
+        categories.map((category: any) => category.categoryId)
+      );
+      setSizes(sizes);
+      setImages(images);
+    }
+  };
+
+  const action = (
+    <React.Fragment>
+      <Button color="secondary" size="small" onClick={handleCloseNoti}>
+        UNDO
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleCloseNoti}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
+  useEffect(() => {
+    fetchCategories();
+    fetchSpecificProduct();
+  }, [open]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      handleCloseNoti(undefined, "timeout");
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [openNoti, handleCloseNoti]);
 
   return (
     <div>
@@ -92,40 +291,244 @@ const ProductPopup: React.FC<Props> = ({ isUpdate, setIsUpdate }) => {
           {isUpdate ? "Cập nhật sản phẩm" : "Thêm mới sản phẩm"}
         </DialogTitle>
         <DialogContent>
-          <form>
-            <input
-              type="text"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-              name="name"
-            />
-            <input
-              type="text"
-              value={description}
-              onChange={(event) => setDescription(event.target.value)}
-              name="description"
-            />
-            <input
-              type="text"
-              value={sizes}
-              onChange={(event) => setSizes(event.target.value)}
-              name="sizes"
-            />
-            <input type="file" onChange={handleFileChange} name="images[]" />
-            <input
-              type="text"
-              value={categories}
-              onChange={(event) => setCategories(event.target.value)}
-              name="categories"
-            />
-          </form>
+          <div>
+            <Stack alignItems="center">
+              <Stack
+                className={styles.wrapInput}
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <input
+                  className={styles.input}
+                  onChange={(e) => setName(e.target.value)}
+                  value={name}
+                  placeholder="Name"
+                  name="Name"
+                  type="text"
+                />
+              </Stack>
+            </Stack>
+            <Stack alignItems="center">
+              <Stack
+                className={styles.wrapInput}
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <input
+                  className={styles.input}
+                  onChange={(e) => setDescription(e.target.value)}
+                  value={description}
+                  placeholder="Description"
+                  name="description"
+                  type="text"
+                />
+              </Stack>
+            </Stack>
+
+            <Stack>
+              <Stack>
+                <label
+                  style={{
+                    fontSize: "1.1rem",
+                    marginTop: "10px",
+                    textTransform: "capitalize",
+                  }}
+                  htmlFor="select"
+                >
+                  Chọn Danh Mục Cho Sản Phẩm
+                </label>
+                <select
+                  id="select"
+                  multiple
+                  value={selectedCategories}
+                  onChange={handleChangeCategories}
+                  style={{ fontSize: "1rem", marginTop: "10px" }}
+                >
+                  {categories.length > 0 &&
+                    categories.map((category) => (
+                      <option
+                        className={styles.option}
+                        key={category.categoryId}
+                        value={category.categoryId}
+                      >
+                        {category.name}
+                      </option>
+                    ))}
+                </select>
+              </Stack>
+
+              <Stack>
+                <Stack
+                  className={styles.wrapInput}
+                  flexDirection="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <label>Size</label>
+                  <input
+                    className={styles.input}
+                    onChange={(e) => setNewSizeName(e.target.value)}
+                    value={newSizeName}
+                    placeholder="Size name"
+                    name="sizename"
+                    type="text"
+                  />
+                </Stack>
+                <Stack
+                  className={styles.wrapInput}
+                  flexDirection="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <label>Số lượng</label>
+                  <input
+                    className={styles.input}
+                    onChange={(e) =>
+                      setNewSizeQuantity(parseInt(e.target.value))
+                    }
+                    value={newSizeQuantity}
+                    placeholder="Size Quantity"
+                    name="sizeQuantity"
+                    type="number"
+                  />
+                </Stack>
+                <Stack
+                  className={styles.wrapInput}
+                  flexDirection="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <label>Giá</label>
+                  <input
+                    className={styles.input}
+                    onChange={(e) => setNewSizePrice(parseInt(e.target.value))}
+                    value={newSizePrice}
+                    placeholder="Size Price"
+                    name="sizePrice"
+                    type="number"
+                  />
+                </Stack>
+                <Box m="10px 0" width="100%">
+                  <button
+                    className={styles.button}
+                    style={{ textTransform: "uppercase" }}
+                    onClick={handleAddSize}
+                  >
+                    Add Size
+                  </button>
+                </Box>
+
+                {sizes.map((size, index) => (
+                  <Stack key={index} mb="20px">
+                    <Typography>Type</Typography>
+                    <Stack
+                      className={styles.wrapInput}
+                      flexDirection="row"
+                      justifyContent="space-between"
+                      alignItems="center"
+                    >
+                      <label>Size</label>
+                      <input
+                        className={styles.input}
+                        onChange={(e) => {
+                          const updatedSize = {
+                            ...size,
+                            sizeName: e.target.value,
+                          };
+                          handleSizeUpdate(updatedSize, index);
+                        }}
+                        value={size.sizeName}
+                        placeholder="Size name"
+                        name="sizename"
+                        type="text"
+                      />
+                    </Stack>
+                    <Stack
+                      className={styles.wrapInput}
+                      flexDirection="row"
+                      justifyContent="space-between"
+                      alignItems="center"
+                    >
+                      <label>Số lượng</label>
+                      <input
+                        className={styles.input}
+                        onChange={(e) => {
+                          const updatedSize = {
+                            ...size,
+                            quantity: parseInt(e.target.value),
+                          };
+                          handleSizeUpdate(updatedSize, index);
+                        }}
+                        value={size.quantity}
+                        placeholder="Size Quantity"
+                        name="sizeQuantity"
+                        type="number"
+                      />
+                    </Stack>
+                    <Stack
+                      className={styles.wrapInput}
+                      flexDirection="row"
+                      justifyContent="space-between"
+                      alignItems="center"
+                    >
+                      <label>Giá</label>
+                      <input
+                        className={styles.input}
+                        onChange={(e) => {
+                          const updatedSize = {
+                            ...size,
+                            price: parseInt(e.target.value),
+                          };
+                          handleSizeUpdate(updatedSize, index);
+                        }}
+                        value={size.price}
+                        placeholder="Size Price"
+                        name="sizePrice"
+                        type="number"
+                      />
+                    </Stack>
+                  </Stack>
+                ))}
+              </Stack>
+
+              <Stack
+                className={styles.wrapInput}
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <input
+                  type="file"
+                  multiple
+                  onChange={handleFileChange}
+                  name="images[]"
+                  className={styles.input}
+                />
+              </Stack>
+            </Stack>
+          </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleAddProduct} color="primary">
+          <Button onClick={handleProcessProduct} color="primary">
             Add
           </Button>
         </DialogActions>
       </Dialog>
+      <Snackbar
+        open={openNoti}
+        autoHideDuration={null}
+        onClose={handleCloseNoti}
+      >
+        <Alert
+          onClose={handleCloseNoti}
+          severity={statusAlert}
+          sx={{ width: "100%" }}
+        >
+          {messageAlert}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

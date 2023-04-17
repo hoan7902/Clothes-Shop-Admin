@@ -1,13 +1,17 @@
+import Head from "next/head";
+import Image from "next/image";
 import Layout from "../../components/Layout";
+import SliderImage from "../../components/Home/SliderImage";
 import { Box, Stack, Typography } from "@mui/material";
 import styles from "./styles.module.css";
-import CategoryLayout from "@/components/Category/CategoryLayout";
-import { getCategories } from "../api";
+import ProductItem from "@/components/Product/ProductLayout/ProductItem";
+import ProductLayout from "@/components/Product/ProductLayout";
 import { useEffect, useState } from "react";
+import { getOrders } from "../api";
+import OrderLayout from "@/components/Order/OrderLayout";
 
-const Category: React.FC = () => {
-
-  const [categories, setCategories] = useState([]);
+export default function Order() {
+  const [orderData, setOrderData] = useState([]);
   const [reload, setReload] = useState(false);
   const [total, setTotal] = useState(0);
   const [limit, setLimit] = useState(5);
@@ -15,13 +19,14 @@ const Category: React.FC = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await getCategories(limit, page);
-      setCategories(res.data.categories);
+      const res = await getOrders(limit, page);
+      setOrderData(res.data.data);
       setTotal(res.data.count);
     }
 
     fetchData();
   }, [reload]);
+
   return (
     <>
       <Layout>
@@ -31,14 +36,20 @@ const Category: React.FC = () => {
               sx={{ paddingBottom: { xs: "1rem", md: "5rem" } }}
               className={styles.title}
             >
-              DANH MỤC
+              Đơn Hàng
             </Typography>
-            <CategoryLayout limit={limit} page={page} setPage={setPage} total={total} categories={categories} reload={reload} setReload={setReload} />
+            <OrderLayout
+              limit={limit}
+              page={page}
+              setPage={setPage}
+              total={total}
+              orderData={orderData}
+              reload={reload}
+              setReload={setReload}
+            />
           </Box>
         </Box>
       </Layout>
     </>
   );
-};
-
-export default Category;
+}

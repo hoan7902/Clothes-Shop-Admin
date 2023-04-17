@@ -24,7 +24,7 @@ const PromotionSlide = ({ title = "No name" }: Props): JSX.Element => {
       <Link href="new-arrival">
         <button className={styles.button}>Shop Now</button>
       </Link>
-      <Box sx={{ marginTop: "20px", width: { md: "950px", xs: "375px" } }}>
+      <Box sx={{ marginTop: "20px", width: { sm: "950px", xs: "375px" } }}>
         <SliderMutipleImages
           numberSlideToShow={isTablet ? (isMobile ? 2 : 3) : 4}
           numberSlideToScroll={isTablet ? 1 : 2}

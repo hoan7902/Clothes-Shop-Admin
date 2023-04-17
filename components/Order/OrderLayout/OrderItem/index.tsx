@@ -2,28 +2,28 @@ import React, { useState } from "react";
 import { Dispatch, SetStateAction } from "react";
 import { Grid, Stack, Typography } from "@mui/material";
 import styles from "./styles.module.css";
-import CategoryPopup from "../CategoryPopup";
-import { deleteCategory } from "@/pages/api";
+import OrderPopup from "../OrderPopup";
 
-interface Category {
-  categoryId: string;
-  name: string;
-  description: string;
+interface OrderData {
+  address: string;
+  cost: number | string; // Depending on how the data is used, the cost can be represented as either a number or a string
+  deliveryTime: Date | null;
+  note: string;
+  orderId: string;
+  orderTime: string;
+  phone: string;
+  status: string;
+  userId: string;
 }
 
 interface Props {
-  category: Category;
+  order?: OrderData;
   reload: boolean;
   setReload: Dispatch<SetStateAction<boolean>>;
 }
 
-const CategoryItem: React.FC<Props> = ({ category, reload, setReload }) => {
-  const [isUpdate, setIsUpdate] = useState(true);
-
-  const handleDeleteCategory = async () => {
-    const response = await deleteCategory(category.categoryId);
-    setReload(!reload);
-  }
+const OrderItem: React.FC<Props> = ({ order, reload, setReload }) => {
+  const [isUpdate, setIsUpdate] = useState(true)
 
   return (
     <>
@@ -36,7 +36,7 @@ const CategoryItem: React.FC<Props> = ({ category, reload, setReload }) => {
               lineHeight="1.75rem"
               color="#444"
             >
-              {category.name}
+              {order?.orderId}
             </Typography>
           </Stack>
         </Grid>
@@ -51,19 +51,16 @@ const CategoryItem: React.FC<Props> = ({ category, reload, setReload }) => {
           sm={4}
         >
           <Typography fontSize="1.1rem" fontWeight="400">
-            {category.description}
+            {order?.status}
           </Typography>
         </Grid>
         <Grid item xs={6} sm={4}>
           <Stack flexDirection="row" alignItems="center">
-            <CategoryPopup
-              isUpdate={isUpdate}
-              setIsUpdate={setIsUpdate}
+            <OrderPopup
               reload={reload}
               setReload={setReload}
-              category={category}
+              order={order}
             />
-            <button onClick={handleDeleteCategory} className={styles.button}>Xóa</button>
           </Stack>
         </Grid>
       </Grid>
@@ -71,4 +68,4 @@ const CategoryItem: React.FC<Props> = ({ category, reload, setReload }) => {
   );
 };
 
-export default CategoryItem;
+export default OrderItem;

@@ -8,12 +8,23 @@ import {
   DialogActions,
   Stack,
   Typography,
+  Snackbar,
+  Alert,
+  AlertColor,
 } from "@mui/material";
 import styles from "./styles.module.css";
-import { addCategory } from "@/pages/api";
+import { addCategory, getCategoryById, updateCategory } from "@/pages/api";
 import axios from "axios";
+import { useEffect } from "react";
+
+interface Category {
+  categoryId: string;
+  name: string;
+  description: string;
+}
 
 interface Props {
+  category: Category;
   isUpdate?: boolean;
   setIsUpdate?: Dispatch<SetStateAction<boolean>>;
   reload: boolean;
@@ -21,6 +32,7 @@ interface Props {
 }
 
 const CategoryPopup: React.FC<Props> = ({
+  category,
   isUpdate,
   setIsUpdate,
   reload,
@@ -29,6 +41,23 @@ const CategoryPopup: React.FC<Props> = ({
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
+  const [openNoti, setOpenNoti] = useState(false);
+  const [statusAlert, setStatusAlert] = useState<AlertColor>("error");
+  const [messageAlert, setMessageAlert] = useState("Thiếu thông tin");
+
+  const hanldOpenNoti = () => {
+    setOpenNoti(true);
+  };
+
+  const handleCloseNoti = (
+    event: React.SyntheticEvent | Event | undefined = undefined,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenNoti(false);
+  };
 
   const handleOpen = () => {
     setOpen(true);
@@ -38,19 +67,50 @@ const CategoryPopup: React.FC<Props> = ({
     setOpen(false);
   };
 
-  const handleAddCategory = async () => {
-    setName(name => "");
-    setDesc(desc => "");
-    setOpen(false);
-    if (name === "") {
-      return;
-    }
+  const handleProcessCategory = async () => {
     if (!isUpdate) {
-      console.log("check desc: ", desc);
+      if (name === "") {
+        setOpenNoti(true);
+        setStatusAlert("error");
+        setMessageAlert("Thiếu thông tin!");
+        return;
+      }
       const respone = await addCategory({ name, description: desc });
+      setOpenNoti(true);
+      setStatusAlert("success");
+      setMessageAlert("Thành công");
+      setReload(!reload);
+    } else {
+      const response = await updateCategory(category.categoryId, name, desc);
+      console.log("check update category: ", response);
+      setOpenNoti(true);
+      setStatusAlert("success");
+      setMessageAlert("Thành công");
       setReload(!reload);
     }
+    setName((name) => "");
+    setDesc((desc) => "");
+    setOpen(false);
   };
+
+  useEffect(() => {
+    const fetchCategory = async () => {
+      if (category) {
+        const response = await getCategoryById(category.categoryId);
+        setName(response.data.data.name);
+        setDesc(response.data.data.description);
+      }
+    };
+    fetchCategory();
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      handleCloseNoti(undefined, "timeout");
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [openNoti, handleCloseNoti]);
+
   return (
     <div>
       <button onClick={handleOpen} className={styles.button}>
@@ -100,11 +160,24 @@ const CategoryPopup: React.FC<Props> = ({
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleAddCategory} color="primary">
+          <Button onClick={handleProcessCategory} color="primary">
             Add
           </Button>
         </DialogActions>
       </Dialog>
+      <Snackbar
+        open={openNoti}
+        autoHideDuration={null}
+        onClose={handleCloseNoti}
+      >
+        <Alert
+          onClose={handleCloseNoti}
+          severity={statusAlert}
+          sx={{ width: "100%" }}
+        >
+          {messageAlert}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

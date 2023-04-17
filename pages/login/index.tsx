@@ -22,7 +22,7 @@ const Login = (): JSX.Element => {
       console.log("check response: ", response);
       if (response !== undefined) {
         localStorage.setItem("user", JSON.stringify(response));
-        router.push("/");
+        router.push("/order");
       } else {
         console.log("not working");
       }
