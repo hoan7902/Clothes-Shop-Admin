@@ -13,14 +13,13 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     const user = localStorage.getItem("user");
-    console.log("reload");
     if (!user) {
       router.push("/");
     }
   }, [reload]);
   return (
     <ReloadContext.Provider value={{ reload, setReload }}>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </ReloadContext.Provider>
   );
 }

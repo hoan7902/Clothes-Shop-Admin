@@ -43,7 +43,6 @@ const Login = (): JSX.Element => {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await loginUser(JSON.stringify({ email, password }));
-    console.log("check res: ", response);
     if (response.status === true) {
       setOpenNoti(true);
       setStatusAlert("success");

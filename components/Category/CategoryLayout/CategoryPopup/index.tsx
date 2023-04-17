@@ -82,7 +82,6 @@ const CategoryPopup: React.FC<Props> = ({
       setReload(!reload);
     } else {
       const response = await updateCategory(category.categoryId, name, desc);
-      console.log("check update category: ", response);
       setOpenNoti(true);
       setStatusAlert("success");
       setMessageAlert("Thành công");

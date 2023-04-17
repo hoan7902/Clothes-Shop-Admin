@@ -17,6 +17,9 @@ export default function Home() {
     if (!storedUser) {
       router.push("/login");
     }
+    else {
+      router.push("/order");
+    }
   }, [router]);
 
   return (

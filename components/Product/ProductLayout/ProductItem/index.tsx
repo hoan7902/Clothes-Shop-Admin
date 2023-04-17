@@ -26,7 +26,6 @@ const ProductItem: React.FC<Props> = ({ product, reload, setReload }) => {
 
   const handleDelete = async () => {
     const response = await deleteSpecificProduct(product?.productId);
-    console.log("check delete: ", response);
     setReload(!reload);
   };
 

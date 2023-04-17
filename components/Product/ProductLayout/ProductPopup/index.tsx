@@ -183,7 +183,6 @@ const ProductPopup: React.FC<Props> = ({
       const res = await addProduct(formData);
       setReload(!reload);
     } else {
-      console.log("check sizes: ", sizes);
       const formData = new FormData();
       if (product) {
         formData.append("productId", product.productId);
@@ -209,7 +208,6 @@ const ProductPopup: React.FC<Props> = ({
         setNewSizeQuantity(0);
         setNewSizePrice(0);
         const response = await updateSpecificProduct(formData);
-        console.log("check res: ", response.data);
         setReload(!reload);
       }
     }
