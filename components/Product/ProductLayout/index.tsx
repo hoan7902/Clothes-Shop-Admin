@@ -53,18 +53,18 @@ const ProductLayout: React.FC<Props> = ({
         justifyContent="center"
         alignItems="center"
       >
-        <Grid item className={styles.textHeader} xs={6} md={4}>
+        <Grid item className={styles.textHeader} xs={6} sm={4}>
           Sản phẩm
         </Grid>
         <Grid
-          sx={{ display: { xs: "none", md: "block" } }}
+          sx={{ display: { xs: "none", sm: "block" } }}
           className={styles.textHeader}
           xs={4}
           item
         >
           Thông tin
         </Grid>
-        <Grid className={styles.textHeader} xs={6} md={4} item>
+        <Grid className={styles.textHeader} xs={6} sm={4} item>
           Thao tác
         </Grid>
       </Grid>

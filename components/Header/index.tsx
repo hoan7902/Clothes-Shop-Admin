@@ -54,6 +54,7 @@ const Header: React.FC = () => {
           flexDirection="row"
           alignItems="center"
           width="50%"
+          justifyContent="space-around"
         >
           <Link className={styles.headerLeft__link__item} href="/order">
             <Typography
