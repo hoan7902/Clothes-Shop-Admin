@@ -6,7 +6,6 @@ import { getCategories } from "../api";
 import { useEffect, useState } from "react";
 
 const Category: React.FC = () => {
-
   const [categories, setCategories] = useState([]);
   const [reload, setReload] = useState(false);
   const [total, setTotal] = useState(0);
@@ -16,8 +15,8 @@ const Category: React.FC = () => {
   useEffect(() => {
     async function fetchData() {
       const res = await getCategories(limit, page);
-      setCategories(res.data.categories);
-      setTotal(res.data.count);
+      setCategories(res?.data.categories);
+      setTotal(res?.data.count);
     }
 
     fetchData();
@@ -26,15 +25,21 @@ const Category: React.FC = () => {
     <>
       <Layout>
         <Box className="container">
-          <Box className="container">
-            <Typography
-              sx={{ paddingBottom: { xs: "1rem", md: "5rem" } }}
-              className={styles.title}
-            >
-              DANH MỤC
-            </Typography>
-            <CategoryLayout limit={limit} page={page} setPage={setPage} total={total} categories={categories} reload={reload} setReload={setReload} />
-          </Box>
+          <Typography
+            sx={{ paddingBottom: { xs: "1rem", md: "2rem" } }}
+            className={styles.title}
+          >
+            DANH MỤC
+          </Typography>
+          <CategoryLayout
+            limit={limit}
+            page={page}
+            setPage={setPage}
+            total={total}
+            categories={categories}
+            reload={reload}
+            setReload={setReload}
+          />
         </Box>
       </Layout>
     </>

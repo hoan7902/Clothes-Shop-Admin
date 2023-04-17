@@ -1,7 +1,9 @@
 // components/layout.tsx
 
+import { Stack } from "@mui/material";
 import Footer from "../Footer";
 import Header from "../Header";
+import styles from "./styles.module.css"
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -10,7 +12,7 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps): JSX.Element {
   return (
     <>
-      <main >
+      <main className={styles.mainLayout}>
         <Header/>
         {children}
         <Footer/>

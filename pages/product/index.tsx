@@ -19,8 +19,8 @@ export default function Product() {
   useEffect(() => {
     async function fetchData() {
       const res = await getProducts(limit, page);
-      setProducts(res.data.data);
-      setTotal(res.data.count);
+      setProducts(res?.data.data);
+      setTotal(res?.data.count);
     }
 
     fetchData();
@@ -30,15 +30,21 @@ export default function Product() {
     <>
       <Layout>
         <Box className="container">
-          <Box className="container">
-            <Typography
-              sx={{ paddingBottom: { xs: "1rem", md: "5rem" } }}
-              className={styles.title}
-            >
-              sản phẩm
-            </Typography>
-            <ProductLayout limit={limit} page={page} setPage={setPage} total={total} products={products} reload={reload} setReload={setReload}/>
-          </Box>
+          <Typography
+            sx={{ paddingBottom: { xs: "1rem", md: "2rem" } }}
+            className={styles.title}
+          >
+            sản phẩm
+          </Typography>
+          <ProductLayout
+            limit={limit}
+            page={page}
+            setPage={setPage}
+            total={total}
+            products={products}
+            reload={reload}
+            setReload={setReload}
+          />
         </Box>
       </Layout>
     </>

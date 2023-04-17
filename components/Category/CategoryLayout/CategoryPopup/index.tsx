@@ -96,8 +96,8 @@ const CategoryPopup: React.FC<Props> = ({
     const fetchCategory = async () => {
       if (category) {
         const response = await getCategoryById(category.categoryId);
-        setName(response.data.data.name);
-        setDesc(response.data.data.description);
+        setName(response?.data.data.name);
+        setDesc(response?.data.data.description);
       }
     };
     fetchCategory();

@@ -20,8 +20,8 @@ export default function Order() {
   useEffect(() => {
     async function fetchData() {
       const res = await getOrders(limit, page);
-      setOrderData(res.data.data);
-      setTotal(res.data.count);
+      setOrderData(res?.data.data);
+      setTotal(res?.data.count);
     }
 
     fetchData();
@@ -31,23 +31,21 @@ export default function Order() {
     <>
       <Layout>
         <Box className="container">
-          <Box className="container">
-            <Typography
-              sx={{ paddingBottom: { xs: "1rem", md: "5rem" } }}
-              className={styles.title}
-            >
-              Đơn Hàng
-            </Typography>
-            <OrderLayout
-              limit={limit}
-              page={page}
-              setPage={setPage}
-              total={total}
-              orderData={orderData}
-              reload={reload}
-              setReload={setReload}
-            />
-          </Box>
+          <Typography
+            sx={{ paddingBottom: { xs: "1rem", md: "2rem" } }}
+            className={styles.title}
+          >
+            Đơn Hàng
+          </Typography>
+          <OrderLayout
+            limit={limit}
+            page={page}
+            setPage={setPage}
+            total={total}
+            orderData={orderData}
+            reload={reload}
+            setReload={setReload}
+          />
         </Box>
       </Layout>
     </>
