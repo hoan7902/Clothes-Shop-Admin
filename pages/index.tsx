@@ -21,13 +21,6 @@ export default function Home() {
 
   return (
     <>
-      <Layout>
-        <SliderImage />
-        <PromotionSlide title="New Arrival" />
-        <CollectionSlide />
-        <PromotionSlide title="Best Seller" />
-        <LocationBanner />
-      </Layout>
     </>
   );
 }

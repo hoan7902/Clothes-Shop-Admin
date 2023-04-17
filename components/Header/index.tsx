@@ -101,7 +101,11 @@ const Header: React.FC = () => {
         }}
       >
         <Box
-          sx={{ $hover: { cursor: "pointer" } }}
+          sx={{
+            "&:hover": {
+              cursor: "pointer",
+            },
+          }}
           onClick={handleLogout}
           display="flex"
           alignItems="center"
