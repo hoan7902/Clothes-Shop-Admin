@@ -16,14 +16,10 @@ export default function Home() {
     const storedUser = localStorage.getItem("user");
     if (!storedUser) {
       router.push("/login");
-    }
-    else {
+    } else {
       router.push("/order");
     }
   }, [router]);
 
-  return (
-    <>
-    </>
-  );
+  return <></>;
 }

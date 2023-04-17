@@ -23,7 +23,7 @@ const CategoryItem: React.FC<Props> = ({ category, reload, setReload }) => {
   const handleDeleteCategory = async () => {
     const response = await deleteCategory(category.categoryId);
     setReload(!reload);
-  }
+  };
 
   return (
     <>
@@ -63,7 +63,9 @@ const CategoryItem: React.FC<Props> = ({ category, reload, setReload }) => {
               setReload={setReload}
               category={category}
             />
-            <button onClick={handleDeleteCategory} className={styles.button}>Xóa</button>
+            <button onClick={handleDeleteCategory} className={styles.button}>
+              Xóa
+            </button>
           </Stack>
         </Grid>
       </Grid>

@@ -43,16 +43,23 @@ const Login = (): JSX.Element => {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await loginUser(JSON.stringify({ email, password }));
-    if (response.status === true) {
+    console.log("check rs: ", response.data);
+    if (response?.data.role !== "admin") {
       setOpenNoti(true);
-      setStatusAlert("success");
-      setMessageAlert("Đăng nhập thành công");
-      router.push("/order");
-      localStorage.setItem("user", JSON.stringify(response));
-    } else {
       setStatusAlert("error");
-      setMessageAlert("Thiếu hoặc sai thông tin");
-      setOpenNoti(true);
+      setMessageAlert("Tài khoản của bạn không có quyền để đăng nhập");
+    } else {
+      if (response?.status === true) {
+        setOpenNoti(true);
+        setStatusAlert("success");
+        setMessageAlert("Đăng nhập thành công");
+        router.push("/order");
+        localStorage.setItem("user", JSON.stringify(response));
+      } else {
+        setStatusAlert("error");
+        setMessageAlert("Thiếu hoặc sai thông tin");
+        setOpenNoti(true);
+      }
     }
   };
 
@@ -86,7 +93,6 @@ const Login = (): JSX.Element => {
                 type="text"
               />
             </Stack>
-            <span></span>
           </Stack>
           <Stack alignItems="center">
             <Stack
@@ -109,7 +115,6 @@ const Login = (): JSX.Element => {
                 )}
               </Box>
             </Stack>
-            <span></span>
             <Typography
               sx={{ "&:hover": { cursor: "pointer", opacity: "0.9" } }}
               color="#ad2526"

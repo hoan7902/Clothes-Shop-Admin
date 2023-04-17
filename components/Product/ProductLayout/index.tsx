@@ -17,13 +17,13 @@ interface Product {
 }
 
 interface Props {
-  limit: number,
-  page: number,
-  setPage: React.Dispatch<React.SetStateAction<number>>,
-  total: number,
-  products?: Product[],
-  reload: boolean,
-  setReload: Dispatch<SetStateAction<boolean>>
+  limit: number;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  total: number;
+  products?: Product[];
+  reload: boolean;
+  setReload: Dispatch<SetStateAction<boolean>>;
 }
 
 const ProductLayout: React.FC<Props> = ({
@@ -35,13 +35,15 @@ const ProductLayout: React.FC<Props> = ({
   reload,
   setReload,
 }) => {
-
   const [quantity, setQuantity] = useState(1);
 
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number): void => {
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ): void => {
     setPage(value);
     setReload(!reload);
-  }
+  };
 
   return (
     <>
@@ -78,7 +80,10 @@ const ProductLayout: React.FC<Props> = ({
         />
       ))}
       <Stack m="20px 0" width="100%" alignItems="center">
-        <Pagination count={Math.ceil(total / limit)} onChange={handlePageChange} />
+        <Pagination
+          count={Math.ceil(total / limit)}
+          onChange={handlePageChange}
+        />
       </Stack>
     </>
   );

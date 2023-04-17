@@ -15,7 +15,7 @@ export default function Layout({ children }: LayoutProps): JSX.Element {
       <main className={styles.mainLayout}>
         <Header/>
         {children}
-        <Footer/>
+        <Footer />
       </main>
     </>
   );

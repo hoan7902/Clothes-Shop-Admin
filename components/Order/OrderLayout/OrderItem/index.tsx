@@ -23,7 +23,7 @@ interface Props {
 }
 
 const OrderItem: React.FC<Props> = ({ order, reload, setReload }) => {
-  const [isUpdate, setIsUpdate] = useState(true)
+  const [isUpdate, setIsUpdate] = useState(true);
 
   return (
     <>
@@ -56,11 +56,7 @@ const OrderItem: React.FC<Props> = ({ order, reload, setReload }) => {
         </Grid>
         <Grid item xs={6} sm={4}>
           <Stack flexDirection="row" alignItems="center">
-            <OrderPopup
-              reload={reload}
-              setReload={setReload}
-              order={order}
-            />
+            <OrderPopup reload={reload} setReload={setReload} order={order} />
           </Stack>
         </Grid>
       </Grid>
