@@ -8,19 +8,19 @@ import ReloadContext from "@/context/ReloadContext";
 config.autoAddCss = false;
 
 export default function App({ Component, pageProps }: AppProps) {
-  const router = useRouter();
-  const [reload, setReload] = useState(false);
+    const router = useRouter();
+    const [reload, setReload] = useState(false);
 
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-    console.log("reload");
-    if (!user) {
-      router.push("/");
-    }
-  }, [reload]);
-  return (
-    <ReloadContext.Provider value={{ reload, setReload }}>
-      <Component {...pageProps} />;
-    </ReloadContext.Provider>
-  );
+    useEffect(() => {
+        const user = localStorage.getItem("user");
+        console.log("reload");
+        if (!user) {
+            router.push("/");
+        }
+    }, [reload]);
+    return (
+        <ReloadContext.Provider value={{ reload, setReload }}>
+            <Component {...pageProps} />
+        </ReloadContext.Provider>
+    );
 }
