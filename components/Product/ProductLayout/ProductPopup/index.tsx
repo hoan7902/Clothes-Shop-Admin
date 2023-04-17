@@ -233,13 +233,13 @@ const ProductPopup: React.FC<Props> = ({
 
   const fetchCategories = async () => {
     const response = await getCategories(100);
-    setCategories(response.data.categories);
+    setCategories(response?.data.categories);
   };
 
   const fetchSpecificProduct = async () => {
     if (product) {
       const response = await getSpecificProduct(product.productId);
-      const { name, description, categories, sizes } = response.data;
+      const { name, description, categories, sizes } = response?.data;
       setName(name);
       setDescription(description);
       setSelectedCategories(
