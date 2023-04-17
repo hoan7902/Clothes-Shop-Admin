@@ -344,7 +344,8 @@ const ProductPopup: React.FC<Props> = ({
                   onChange={handleChangeCategories}
                   style={{ fontSize: "1rem", marginTop: "10px" }}
                 >
-                  {categories.length > 0 &&
+                  {categories &&
+                    categories.length > 0 &&
                     categories.map((category) => (
                       <option
                         className={styles.option}

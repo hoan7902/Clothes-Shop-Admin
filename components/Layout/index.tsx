@@ -10,10 +10,10 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps): JSX.Element {
   return (
     <>
-      <main >
-        <Header/>
+      <main>
+        <Header />
         {children}
-        <Footer/>
+        <Footer />
       </main>
     </>
   );

@@ -37,7 +37,15 @@ export default function Product() {
             >
               sản phẩm
             </Typography>
-            <ProductLayout limit={limit} page={page} setPage={setPage} total={total} products={products} reload={reload} setReload={setReload}/>
+            <ProductLayout
+              limit={limit}
+              page={page}
+              setPage={setPage}
+              total={total}
+              products={products}
+              reload={reload}
+              setReload={setReload}
+            />
           </Box>
         </Box>
       </Layout>

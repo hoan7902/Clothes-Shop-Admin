@@ -6,7 +6,6 @@ import { getCategories } from "../api";
 import { useEffect, useState } from "react";
 
 const Category: React.FC = () => {
-
   const [categories, setCategories] = useState([]);
   const [reload, setReload] = useState(false);
   const [total, setTotal] = useState(0);
@@ -33,7 +32,15 @@ const Category: React.FC = () => {
             >
               DANH MỤC
             </Typography>
-            <CategoryLayout limit={limit} page={page} setPage={setPage} total={total} categories={categories} reload={reload} setReload={setReload} />
+            <CategoryLayout
+              limit={limit}
+              page={page}
+              setPage={setPage}
+              total={total}
+              categories={categories}
+              reload={reload}
+              setReload={setReload}
+            />
           </Box>
         </Box>
       </Layout>

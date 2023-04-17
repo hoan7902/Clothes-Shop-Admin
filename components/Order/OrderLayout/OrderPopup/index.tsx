@@ -71,7 +71,6 @@ const OrderPopup: React.FC<Props> = ({ order, reload, setReload }) => {
       setOpen(false);
       setOpenNoti(true);
     }
-
   };
 
   useEffect(() => {
