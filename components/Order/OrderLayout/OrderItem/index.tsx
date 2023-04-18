@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dispatch, SetStateAction } from "react";
 import { Grid, Stack, Typography } from "@mui/material";
 import styles from "./styles.module.css";
 import OrderPopup from "../OrderPopup";
+import { getOrderById } from "@/pages/api";
 
 interface OrderData {
   address: string;
@@ -24,6 +25,17 @@ interface Props {
 
 const OrderItem: React.FC<Props> = ({ order, reload, setReload }) => {
   const [isUpdate, setIsUpdate] = useState(true);
+  const [listProduct, setListProduct] = useState([]);
+
+  const fetchData = async () => {
+    const response = await getOrderById(order?.orderId);
+    console.log("check data: ", response?.data.data.products);
+    setListProduct(response?.data.data.products);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -56,7 +68,7 @@ const OrderItem: React.FC<Props> = ({ order, reload, setReload }) => {
         </Grid>
         <Grid item xs={6} sm={4}>
           <Stack flexDirection="row" alignItems="center">
-            <OrderPopup reload={reload} setReload={setReload} order={order} />
+            <OrderPopup listProduct={listProduct} reload={reload} setReload={setReload} order={order} />
           </Stack>
         </Grid>
       </Grid>

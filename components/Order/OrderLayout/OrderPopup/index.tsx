@@ -11,11 +11,14 @@ import {
   Snackbar,
   Alert,
   AlertColor,
+  Box,
+  Grid,
 } from "@mui/material";
 import styles from "./styles.module.css";
 import { addCategory, updateStatusOrder } from "@/pages/api";
 import axios from "axios";
 import { useEffect } from "react";
+import OrderCompleteItem from "../OrderCompleteItem";
 
 interface OrderData {
   address: string;
@@ -29,13 +32,21 @@ interface OrderData {
   userId: string;
 }
 
+interface Product {
+  productId: string;
+  size: string;
+  quantity: string;
+  price: string;
+}
+
 interface Props {
+  listProduct: Product[];
   order?: OrderData;
   reload: boolean;
   setReload: Dispatch<SetStateAction<boolean>>;
 }
 
-const OrderPopup: React.FC<Props> = ({ order, reload, setReload }) => {
+const OrderPopup: React.FC<Props> = ({ listProduct, order, reload, setReload }) => {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<string>(order?.status || "");
   const [openNoti, setOpenNoti] = useState(false);
@@ -90,12 +101,49 @@ const OrderPopup: React.FC<Props> = ({ order, reload, setReload }) => {
         <DialogTitle className={styles.wrapForm}>Chi tiết đơn hàng</DialogTitle>
         <DialogContent>
           <Stack>
-            <Typography>Status: {order?.status}</Typography>
-            <Typography>Số điện thoại: {order?.phone}</Typography>
-            <Typography>Tổng chi phí: {order?.cost}</Typography>
-            <Typography>Note: {order?.note}</Typography>
-            <Typography>Địa chỉ: {order?.address}</Typography>
-            <Typography>Thời gian đặt hàng: {order?.orderTime}</Typography>
+            <Box>
+              <Grid
+                container
+                borderBottom="0.5px solid #444"
+                p="20px"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Grid className={styles.textHeader} xs={6}>
+                  Sản phẩm
+                </Grid>
+                <Grid
+                  sx={{ display: { xs: "none", md: "block" } }}
+                  className={styles.textHeader}
+                  xs={2}
+                >
+                  Đơn giá
+                </Grid>
+                <Grid
+                  sx={{ display: { xs: "none", md: "block" } }}
+                  className={styles.textHeader}
+                  xs={2}
+                >
+                  Số lượng
+                </Grid>
+                <Grid
+                  sx={{ display: { xs: "none", md: "block" } }}
+                  className={styles.textHeader}
+                  xs={2}
+                >
+                  Số tiền
+                </Grid>
+              </Grid>
+              {listProduct.length !== 0 &&
+                listProduct.map((product: any, index) => (
+                  <OrderCompleteItem
+                    id={product.productId}
+                    size={product.size}
+                    quantity={product.quantity}
+                    price={product.price}
+                  />
+                ))}
+            </Box>
             <Stack mt="20px">
               <Typography>Update Status:</Typography>
               <select

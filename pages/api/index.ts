@@ -126,6 +126,15 @@ export const deleteSpecificProduct = async (id: any) => {
   }
 };
 
+export const getOrderById = async (id: any) => {
+  try {
+    const response = await API.get(`/api/order/${id}`);
+    return response;
+  } catch (error) {
+    return (error as AxiosError).response;
+  }
+};
+
 export const getOrders = async (limit: any = 10, page: any = 1) => {
   try {
     const response = await API.get(
