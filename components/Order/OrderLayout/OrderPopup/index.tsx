@@ -153,7 +153,7 @@ const OrderPopup: React.FC<Props> = ({
               flexDirection="row"
               justifyContent="space-between"
               alignItems="center"
-              m="40px 0"
+              m="10px 0"
             >
               <Typography
                 sx={{ width: { xs: "50%", md: "30%" } }}
