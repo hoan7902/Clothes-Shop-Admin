@@ -46,7 +46,12 @@ interface Props {
   setReload: Dispatch<SetStateAction<boolean>>;
 }
 
-const OrderPopup: React.FC<Props> = ({ listProduct, order, reload, setReload }) => {
+const OrderPopup: React.FC<Props> = ({
+  listProduct,
+  order,
+  reload,
+  setReload,
+}) => {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<string>(order?.status || "");
   const [openNoti, setOpenNoti] = useState(false);
@@ -144,6 +149,25 @@ const OrderPopup: React.FC<Props> = ({ listProduct, order, reload, setReload }) 
                   />
                 ))}
             </Box>
+            <Stack
+              flexDirection="row"
+              justifyContent="space-between"
+              alignItems="center"
+              m="40px 0"
+            >
+              <Typography
+                sx={{ width: { xs: "50%", md: "30%" } }}
+                textAlign="center"
+                fontSize="1rem"
+                textTransform="uppercase"
+                color="#9f1110"
+              >
+                Tổng Thanh Toán
+              </Typography>
+              <Typography fontSize="1rem" color="#9f1110">
+                {order && parseInt(order.cost.toString()).toLocaleString()} đ
+              </Typography>
+            </Stack>
             <Stack mt="20px">
               <Typography>Update Status:</Typography>
               <select
