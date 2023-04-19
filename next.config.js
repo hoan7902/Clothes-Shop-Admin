@@ -8,6 +8,11 @@ const nextConfig = {
   env: {
     ...envVars,
   },
+  server: {
+    http2: {
+      disabled: true,
+    },
+  },
 };
 
 module.exports = nextConfig;
