@@ -70,10 +70,10 @@ const ProductItem: React.FC<Props> = ({ product, reload, setReload }) => {
             Category: {product && product.categories}
           </Typography> */}
           <Typography fontSize="1.1rem" fontWeight="400" textAlign="center">
-            MinPrice: {product && product.minPrice}
+            MinPrice: {product && parseInt(product.minPrice).toLocaleString()} đ
           </Typography>
           <Typography fontSize="1.1rem" fontWeight="400" textAlign="center">
-            MaxPrice: {product && product.maxPrice}
+            MaxPrice: {product && parseInt(product.maxPrice).toLocaleString()} đ
           </Typography>
         </Grid>
         <Grid item xs={6} md={4}>

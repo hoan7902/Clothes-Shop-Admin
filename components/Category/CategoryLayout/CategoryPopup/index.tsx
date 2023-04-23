@@ -57,7 +57,16 @@ const CategoryPopup: React.FC<Props> = ({
     setOpenNoti(false);
   };
 
+  const fetchCategory = async () => {
+    if (category) {
+      const response = await getCategoryById(category.categoryId);
+      setName(response?.data.data.name);
+      setDesc(response?.data.data.description);
+    }
+  };
+
   const handleOpen = () => {
+    fetchCategory();
     setOpen(true);
   };
 
@@ -91,13 +100,6 @@ const CategoryPopup: React.FC<Props> = ({
   };
 
   useEffect(() => {
-    const fetchCategory = async () => {
-      if (category) {
-        const response = await getCategoryById(category.categoryId);
-        setName(response?.data.data.name);
-        setDesc(response?.data.data.description);
-      }
-    };
     fetchCategory();
   }, []);
 
