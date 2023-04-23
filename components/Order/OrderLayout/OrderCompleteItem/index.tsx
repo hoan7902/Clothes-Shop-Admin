@@ -40,7 +40,7 @@ const OrderCompleteItem: React.FC<Props> = ({ id, size, quantity, price }) => {
             </div>
             <Stack ml="30px">
               <Typography
-                fontSize="1.25rem"
+                fontSize="1.1rem"
                 fontWeight="100"
                 lineHeight="1.75rem"
                 color="#444"

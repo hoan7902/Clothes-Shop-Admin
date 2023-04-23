@@ -15,10 +15,12 @@ interface OrderData {
   phone: string;
   status: string;
   userId: string;
+  paymentMethod: string;
+  paymentDate: string;
 }
 
 interface Props {
-  order?: OrderData;
+  order: OrderData;
   reload: boolean;
   setReload: Dispatch<SetStateAction<boolean>>;
 }
@@ -39,10 +41,10 @@ const OrderItem: React.FC<Props> = ({ order, reload, setReload }) => {
   return (
     <>
       <Grid container padding="25px" borderBottom="0.5px solid #444" p="20px">
-        <Grid item xs={6} sm={4}>
+        <Grid item sx={{ display: { xs: "none", sm: "block" } }} sm={2}>
           <Stack flexDirection="row">
             <Typography
-              fontSize="1.25rem"
+              fontSize="1.1rem"
               fontWeight="100"
               lineHeight="1.75rem"
               color="#444"
@@ -52,19 +54,37 @@ const OrderItem: React.FC<Props> = ({ order, reload, setReload }) => {
           </Stack>
         </Grid>
 
-        <Grid
-          item
-          sx={{
-            marginLeft: { xs: "37%", sm: "0px" },
-            display: { xs: "none", sm: "block" },
-          }}
-          xs={12}
-          sm={4}
-        >
+        <Grid item xs={6} sm={2}>
           <Typography fontSize="1.1rem" fontWeight="400">
             {order?.status}
           </Typography>
         </Grid>
+
+        <Grid item sx={{ display: { xs: "none", sm: "block" } }} sm={2}>
+          <Stack flexDirection="row">
+            <Typography
+              fontSize="1.1rem"
+              fontWeight="100"
+              lineHeight="1.75rem"
+              color="#444"
+            >
+              {order?.paymentMethod}
+            </Typography>
+          </Stack>
+        </Grid>
+        <Grid item sx={{ display: { xs: "none", sm: "block" } }} sm={2}>
+          <Stack flexDirection="row">
+            <Typography
+              fontSize="1.1rem"
+              fontWeight="100"
+              lineHeight="1.75rem"
+              color="#444"
+            >
+              {order?.paymentDate ? order.paymentDate : "Chưa thanh toán"}
+            </Typography>
+          </Stack>
+        </Grid>
+
         <Grid item xs={6} sm={4}>
           <Stack flexDirection="row" alignItems="center">
             <OrderPopup
