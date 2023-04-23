@@ -30,6 +30,8 @@ interface OrderData {
   phone: string;
   status: string;
   userId: string;
+  paymentMethod: string;
+  paymentDate: string;
 }
 
 interface Product {
@@ -41,7 +43,7 @@ interface Product {
 
 interface Props {
   listProduct: Product[];
-  order?: OrderData;
+  order: OrderData;
   reload: boolean;
   setReload: Dispatch<SetStateAction<boolean>>;
 }
@@ -157,7 +159,6 @@ const OrderPopup: React.FC<Props> = ({
             >
               <Typography
                 sx={{ width: { xs: "50%", md: "30%" } }}
-                textAlign="center"
                 fontSize="1rem"
                 textTransform="uppercase"
                 color="#9f1110"
@@ -168,6 +169,44 @@ const OrderPopup: React.FC<Props> = ({
                 {order && parseInt(order.cost.toString()).toLocaleString()} đ
               </Typography>
             </Stack>
+            <Stack
+              flexDirection="row"
+              justifyContent="space-between"
+              alignItems="center"
+              m="10px 0"
+            >
+              <Typography
+                sx={{ width: { xs: "50%", md: "30%" } }}
+                fontSize="1rem"
+                textTransform="uppercase"
+                color="#9f1110"
+              >
+                Thanh toán
+              </Typography>
+              <Typography fontSize="1rem">
+                {order?.paymentMethod}
+              </Typography>
+            </Stack>
+
+            <Stack
+              flexDirection="row"
+              justifyContent="space-between"
+              alignItems="center"
+              m="10px 0"
+            >
+              <Typography
+                sx={{ width: { xs: "50%", md: "30%" } }}
+                fontSize="1rem"
+                textTransform="uppercase"
+                color="#9f1110"
+              >
+                Ngày Thanh Toán
+              </Typography>
+              <Typography fontSize="1rem">
+                {order?.paymentDate ? order.paymentDate : "Chưa thanh toán"}
+              </Typography>
+            </Stack>
+
             <Stack mt="20px">
               <Typography>Update Status:</Typography>
               <select

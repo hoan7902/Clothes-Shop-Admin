@@ -14,6 +14,8 @@ interface OrderData {
   phone: string;
   status: string;
   userId: string;
+  paymentMethod: string;
+  paymentDate: string;
 }
 
 interface Props {
@@ -35,6 +37,8 @@ const OrderLayout: React.FC<Props> = ({
   reload,
   setReload,
 }) => {
+  console.log("check order: ", orderData);
+
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
     value: number
@@ -52,16 +56,39 @@ const OrderLayout: React.FC<Props> = ({
         justifyContent="center"
         alignItems="center"
       >
-        <Grid item className={styles.textHeader} xs={6} sm={4}>
+        <Grid
+          item
+          className={styles.textHeader}
+          sx={{ display: { xs: "none", sm: "block" } }}
+          sm={2}
+        >
           Mã đơn hàng
+        </Grid>
+        <Grid
+          className={styles.textHeader}
+          xs={6}
+          sm={2}
+          item
+        >
+          Trạng thái
         </Grid>
         <Grid
           sx={{ display: { xs: "none", sm: "block" } }}
           className={styles.textHeader}
-          xs={4}
+          xs={6}
+          sm={2}
           item
         >
-          Trạng thái
+          Phương thức thanh toán
+        </Grid>
+        <Grid
+          sx={{ display: { xs: "none", sm: "block" } }}
+          className={styles.textHeader}
+          xs={6}
+          sm={2}
+          item
+        >
+          Tình trạng thanh toán
         </Grid>
         <Grid className={styles.textHeader} xs={6} sm={4} item>
           Thao tác
