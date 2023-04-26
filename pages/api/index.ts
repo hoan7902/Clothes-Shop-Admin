@@ -1,6 +1,9 @@
 import axios, { AxiosError } from "axios";
 
-const API = axios.create({ baseURL: process.env.SERVER_HOST });
+const API = axios.create({
+  baseURL:
+    /* process.env.SERVER_HOST */ /* "https://vanlamcs-clothesshop.click" */ "http://localhost/LTW/BTL/Shop",
+});
 
 API.interceptors.request.use((req) => {
   if (typeof localStorage !== "undefined" && localStorage.getItem("user")) {

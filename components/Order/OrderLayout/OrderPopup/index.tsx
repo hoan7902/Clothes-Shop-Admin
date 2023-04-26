@@ -183,9 +183,7 @@ const OrderPopup: React.FC<Props> = ({
               >
                 Thanh toán
               </Typography>
-              <Typography fontSize="1rem">
-                {order?.paymentMethod}
-              </Typography>
+              <Typography fontSize="1rem">{order?.paymentMethod}</Typography>
             </Stack>
 
             <Stack

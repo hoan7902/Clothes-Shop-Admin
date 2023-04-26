@@ -64,12 +64,7 @@ const OrderLayout: React.FC<Props> = ({
         >
           Mã đơn hàng
         </Grid>
-        <Grid
-          className={styles.textHeader}
-          xs={6}
-          sm={2}
-          item
-        >
+        <Grid className={styles.textHeader} xs={6} sm={2} item>
           Trạng thái
         </Grid>
         <Grid
