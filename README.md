@@ -1,38 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Clothes Shop Admin
+The admin clothes shop page is a web application built using Next.js and TypeScript. It allows admin users to manage products, orders, customers, and categories through a user-friendly interface. Features include search, sorting, filtering, and a sales dashboard. The application is scalable and easily integrable with other systems.
 
-## Getting Started
+### Demo
 
-First, run the development server:
+You can watch a demo of the application on YouTube by following this link: https://www.youtube.com/watch?v=b1E8miKgfjQ&t=314s
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+### Installation and Setup
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To run this application locally, you'll need to follow these steps:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+1. Clone this repository
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+2. Install the project dependencies: npm install
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+3. Start the development server: npm run dev
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This will start the development server at http://localhost:3000.
 
-## Learn More
+### Backend Repository
 
-To learn more about Next.js, take a look at the following resources:
+This front-end application relies on a back-end API to manage the database and server-side functionality. The back-end API is implemented using PHP and can be found at the following repository: https://github.com/hoan7902/PHP_DB_SHOP
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+To run the application, you will need to follow the instructions provided in the README.md file of the backend repository.
